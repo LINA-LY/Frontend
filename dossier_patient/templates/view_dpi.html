@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulter un DPI</title>
+</head>
+<body>
+
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li style="color: green;">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+    <h1>Dossier Patient de {{ dossier_medical.nom }} {{ dossier_medical.prenom }}</h1>
+    <p><strong>NSS :</strong> {{ dossier_medical.nss }}</p>
+    <p><strong>Date de naissance :</strong> {{ dossier_medical.date_naissance }}</p>
+    <p><strong>Adresse :</strong> {{ dossier_medical.adresse }}</p>
+    <p><strong>Téléphone :</strong> {{ dossier_medical.telephone }}</p>
+    <p><strong>Mutuelle :</strong> {{ dossier_medical.mutuelle|default:"Non spécifiée" }}</p>
+    <h3>QR Code :</h3>
+    <img src="{{ dossier_medical.qr_code.url }}" alt="QR Code du DPI">
+    <a href="{% url 'create_dpi' %}">Créer un autre DPI</a>
+</body>
+</html>
