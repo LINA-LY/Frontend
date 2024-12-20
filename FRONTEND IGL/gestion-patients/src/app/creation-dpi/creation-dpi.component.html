@@ -1,0 +1,90 @@
+<div class="H">
+  <header>
+    <div>
+      <img src="assets\logo.svg" alt="logo">
+    </div>
+    <div>
+      <h1>Créer DPI</h1>
+    </div>
+    <div>
+      <button class="dec">Déconnexion</button>
+    </div>
+  </header>
+</div>
+
+<div class="general">
+  <h1 class="phrase1">Créer un Dossier Patient Informatisé (DPI)</h1>
+  <p class="phrase2">Veuillez renseigner les informations suivantes pour enregistrer un nouveau dossier.</p>
+
+  <!-- Champs à remplir pour le DPI -->
+  <div class="info-id">
+    <h3 class="title1">Informations d'identité</h3>
+    <div>
+      <label class="label">
+        Numéro de Sécurité Sociale <span class="red">*</span>
+      </label>
+      <input type="text" class="in" placeholder="Entrez le numéro de sécurité sociale" #numSecu>
+    </div>
+    <div>
+      <label class="label">
+        Nom <span class="red">*</span>
+      </label>
+      <input type="text" class="in" placeholder="Nom" #nom>
+    </div>
+    <div>
+      <label class="label">
+        Prénom <span class="red">*</span>
+      </label>
+      <input type="text" class="in" placeholder="Prénom" #prenom>
+    </div>
+    <div>
+      <label class="label">
+        Date de naissance <span class="red">*</span>
+      </label>
+      <input type="date" class="in" placeholder="jj/mm/aaaa" #dateNaissance>
+    </div>
+  </div>
+
+  <div class="info-id">
+    <h3 class="title1">Coordonnées</h3>
+    <div>
+      <label class="label">
+        Adresse <span class="red">*</span>
+      </label>
+      <input type="text" class="in" placeholder="Entrez l’adresse" #adresse>
+    </div>
+    <div>
+      <label class="label">
+        Téléphone <span class="red">*</span>
+      </label>
+      <input type="text" class="in" placeholder="Entrez le numéro de téléphone" #telephone>
+    </div>
+    <div>
+      <label class="label">
+        Mutuelle <span class="red">*</span>
+      </label>
+      <input type="text" class="in" placeholder="Entrez le nom de la mutuelle" #mutuelle>
+    </div>
+  </div>
+
+  <div class="info-id">
+    <h3 class="title1">Informations médicales</h3>
+    <div>
+      <label class="label">
+        Médecin traitant <span class="red">*</span>
+      </label>
+      <input type="text" class="in" placeholder="Entrez le nom du médecin" #medecin>
+    </div>
+    <div>
+      <label class="label">
+        Personne à contacter en cas d’urgence <span class="red">*</span>
+      </label>
+      <input type="text" class="in" placeholder="Entrez le nom et le numéro de téléphone" #urgence>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button class="creer" type="button" (click)="onSubmit()">Créer le DPI</button>
+    <button class="Annuler" type="button" (click)="onCancel()">Annuler</button>
+  </div>
+</div>

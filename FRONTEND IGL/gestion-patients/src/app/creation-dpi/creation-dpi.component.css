@@ -1,0 +1,146 @@
+.H{
+  background-color: #003366;
+}
+.header {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 20px; 
+  background-color: #003366; 
+  color: white; 
+}
+
+
+  .dec{
+    color: white; 
+    font-size: 16px;
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px;
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    background-color: #E57373;
+  }
+  
+  .dec:hover {
+    background-color: #ee9595;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+  }
+  
+  
+  .dev:active {
+    background-color: #ee9595;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+  }
+
+
+
+.general{
+  background-color: #F5F5F5;
+  border-radius: 10px;
+  width: 80%; 
+  margin: 0 auto;
+}
+.phrase1{
+ color: #003366;
+ text-align: center;
+}
+.phrase2{
+color: #003366;
+size: 20px;
+text-align: center;
+}
+
+.red{
+  color: red;
+  margin-left: 3px;
+}
+
+.info-id{
+  background-color: #fcfcfc; 
+  border-radius: 8px; 
+  padding: 20px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  margin: 20px auto; 
+  max-width: 800px; 
+  
+}
+.title1{
+  color: #003366;
+  margin-bottom: 10px;
+}
+.label1{
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.in{
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  box-sizing: border-box; 
+  font-size: 14px;
+}
+
+input::placeholder {
+  color: #adb5bd;
+  font-style: italic;
+}
+input:focus {
+  outline: none;
+  border-color: #1d3557; /* Couleur bleue */
+  box-shadow: 0 0 5px rgba(29, 53, 87, 0.3);
+}
+
+button{
+  color: white; 
+  font-size: 16px;
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+}
+
+button:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+}
+
+
+button:active {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.Annuler{
+  background-color: #E57373;
+  
+}
+
+.Annuler:active{
+  background-color: #ee9595;
+}
+
+.Annuler:hover{
+  background-color: #ee9595;
+}
+.creer{
+ background-color: #56C271;
+}
+
+.creer:active{
+  background-color: #6fd288;
+}
+
+.creer:hover{
+  background-color: #6fd288;
+}
+
+.button-container {
+  display: flex; 
+  justify-content: flex-end; 
+  gap: 20px; 
+}
