@@ -3,21 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer un DPI</title>
+    <title>Créer un Dossier Patient</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e90ff;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #007acc;
+        }
+    </style>
 </head>
 <body>
-    <h1>Créer un Dossier Patient Informatisé</h1>
+    <h1>Créer un Dossier Patient</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Créer</button>
+        <label for="nss">NSS</label>
+        <input type="text" name="nss" required>
+
+        <label for="nom">Nom</label>
+        <input type="text" name="nom" required>
+
+        <label for="prenom">Prénom</label>
+        <input type="text" name="prenom" required>
+
+        <label for="date_naissance">Date de Naissance</label>
+        <input type="date" name="date_naissance" required>
+
+        <label for="adresse">Adresse</label>
+        <input type="text" name="adresse" required>
+
+        <label for="telephone">Téléphone</label>
+        <input type="text" name="telephone" required>
+
+        <label for="mutuelle">Mutuelle</label>
+        <input type="text" name="mutuelle">
+
+        <button type="submit" name="submit">Créer</button>
     </form>
-    {% if form.errors %}
-        <ul style="color: red;">
-            {% for field, errors in form.errors.items %}
-                <li>{{ field }}: {{ errors|join:", " }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
 </body>
 </html>

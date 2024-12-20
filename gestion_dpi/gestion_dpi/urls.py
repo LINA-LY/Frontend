@@ -1,31 +1,19 @@
-"""
-URL configuration for gestion_dpi project.
+# URL configuration for the gestion_dpi project
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+# Importation des modules nécessaires
+from django.contrib import admin  # pour la gestion de l'interface admin
+from django.urls import path, include  # pour définir les routes d'URL
+from django.conf import settings  # pour accéder aux paramètres de configuration du projet
+from django.conf.urls.static import static  # pour gérer les fichiers statiques et médias
 
+# Définition des URLs du projet
 urlpatterns = [
+    # Route pour accéder à l'interface d'administration Django
     path('admin/', admin.site.urls),
-    path('dossier_patient/', include('dossier_patient.urls'))
-   
-
+    
+    # Inclut les URLs définies dans l'application 'dossier_patient'
+    path('dossier_patient/', include('dossier_patient.urls')),
 ]
 
-
-
+# Ajoute les configurations pour servir les fichiers médias (images, vidéos, etc.) pendant le développement
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

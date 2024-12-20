@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechercher un Dossier Patient</title>
+    <script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e90ff;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #007acc;
+        }
+
+        #video-container {
+            text-align: center;
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+        }
+
+        video {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            border: 2px solid #007acc;
+        }
+
+        #nss-result {
+            font-size: 18px;
+            margin-top: 10px;
+            text-align: center;
+            color: green;
+        }
+
+        .results {
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .results a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .results a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Rechercher un Dossier Patient</h1>
+
+    <!-- Search by NSS -->
+    <form method="get" action="{% url 'search_dpi' %}">
+        {% csrf_token %}
+        <label for="nss">Rechercher par NSS</label>
+        <input type="text" id="nss" name="nss" required>
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <!-- QR Code Scanner -->
+    <div id="video-container">
+        <video id="video" autoplay></video>
+    </div>
+    <button id="start-scan">Scanner QR Code</button>
+    <p id="nss-result"></p>
+
+    {% if dossier_medical %}
+        <div class="results">
+            <h3>Résultat:</h3>
+            <p><strong>{{ dossier_medical.nom }} {{ dossier_medical.prenom }}</strong></p>
+            <p><strong>NSS:</strong> {{ dossier_medical.nss }}</p>
+            <a href="{% url 'view_dpi' nss=dossier_medical.nss %}">Voir le Dossier</a>
+        </div>
+    {% elif error %}
+        <p style="color: red; text-align: center;">{{ error }}</p>
+    {% endif %}
+
+    <script>
+        const startScanButton = document.getElementById("start-scan");
+        const videoContainer = document.getElementById("video-container");
+        const video = document.getElementById("video");
+        const nssResult = document.getElementById("nss-result");
+        let stream;
+
+        // Start QR code scanning when the button is clicked
+        startScanButton.addEventListener("click", () => {
+            videoContainer.style.display = "block"; // Show the rectangle for the camera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((s) => {
+                    stream = s;
+                    video.srcObject = stream;
+                    video.play();
+                    requestAnimationFrame(scanQRCode); // Start scanning
+                })
+                .catch((err) => {
+                    console.error("Erreur d'accès à la caméra:", err);
+                    alert("Erreur lors de l'accès à la caméra.");
+                });
+        });
+
+        function scanQRCode() {
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d");
+                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+                if (code) {
+                    const nss = code.data; // Extract NSS from the QR code
+                    nssResult.textContent = `NSS détecté: ${nss}`;
+                    stopScanning(); // Stop the scanning process
+                    redirectToSearch(nss); // Redirect to search DPI with NSS
+                }
+            }
+            requestAnimationFrame(scanQRCode); // Keep scanning
+        }
+
+        function stopScanning() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            videoContainer.style.display = "none"; // Hide the rectangle after scanning
+        }
+
+        function redirectToSearch(nss) {
+            window.location.href = `/dossier_patient/search_dpi/?nss=${nss}`;
+        }
+    </script>
+</body>
+</html>

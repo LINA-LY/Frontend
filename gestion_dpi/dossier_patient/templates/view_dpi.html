@@ -3,27 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulter un DPI</title>
+    <title>Consulter un Dossier Patient</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e90ff;
+        }
+
+        .info-box {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box img {
+            display: block;
+            margin: 20px auto;
+            width: 150px;
+            height: 150px;
+        }
+
+        .info-box p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
-
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li style="color: green;">{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
-
-    <h1>Dossier Patient de {{ dossier_medical.nom }} {{ dossier_medical.prenom }}</h1>
-    <p><strong>NSS :</strong> {{ dossier_medical.nss }}</p>
-    <p><strong>Date de naissance :</strong> {{ dossier_medical.date_naissance }}</p>
-    <p><strong>Adresse :</strong> {{ dossier_medical.adresse }}</p>
-    <p><strong>Téléphone :</strong> {{ dossier_medical.telephone }}</p>
-    <p><strong>Mutuelle :</strong> {{ dossier_medical.mutuelle|default:"Non spécifiée" }}</p>
-    <h3>QR Code :</h3>
-    <img src="{{ dossier_medical.qr_code.url }}" alt="QR Code du DPI">
-    <a href="{% url 'create_dpi' %}">Créer un autre DPI</a>
+    <h1>Dossier Patient</h1>
+    <div class="info-box">
+        <p><strong>NSS:</strong> {{ dossier_medical.nss }}</p>
+        <p><strong>Nom:</strong> {{ dossier_medical.nom }}</p>
+        <p><strong>Prénom:</strong> {{ dossier_medical.prenom }}</p>
+        <p><strong>Date de Naissance:</strong> {{ dossier_medical.date_naissance }}</p>
+        <p><strong>Adresse:</strong> {{ dossier_medical.adresse }}</p>
+        <p><strong>Téléphone:</strong> {{ dossier_medical.telephone }}</p>
+        <p><strong>Mutuelle:</strong> {{ dossier_medical.mutuelle|default:"Non spécifiée" }}</p>
+        <h3>QR Code:</h3>
+        <img src="{{ dossier_medical.qr_code }}" alt="QR Code">
+    </div>
 </body>
 </html>
