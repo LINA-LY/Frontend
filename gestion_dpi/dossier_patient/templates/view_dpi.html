@@ -43,13 +43,13 @@
 <body>
     <h1>Dossier Patient</h1>
     <div class="info-box">
-        <p><strong>NSS:</strong> {{ dossier_medical.nss }}</p>
-        <p><strong>Nom:</strong> {{ dossier_medical.nom }}</p>
-        <p><strong>Prénom:</strong> {{ dossier_medical.prenom }}</p>
-        <p><strong>Date de Naissance:</strong> {{ dossier_medical.date_naissance }}</p>
-        <p><strong>Adresse:</strong> {{ dossier_medical.adresse }}</p>
-        <p><strong>Téléphone:</strong> {{ dossier_medical.telephone }}</p>
-        <p><strong>Mutuelle:</strong> {{ dossier_medical.mutuelle|default:"Non spécifiée" }}</p>
+        <p><strong>NSS:</strong> {{ dossier_medical.patient.nss }}</p>
+        <p><strong>Nom:</strong> {{ dossier_medical.patient.nom }}</p>
+        <p><strong>Prénom:</strong> {{ dossier_medical.patient.prenom }}</p>
+        <p><strong>Date de Naissance:</strong> {{ dossier_medical.patient.date_naissance }}</p>
+        <p><strong>Adresse:</strong> {{ dossier_medical.patient.adresse }}</p>
+        <p><strong>Téléphone:</strong> {{ dossier_medical.patient.telephone }}</p>
+        <p><strong>Mutuelle:</strong> {{ dossier_medical.patient.mutuelle|default:"Non spécifiée" }}</p>
         <h3>QR Code:</h3>
         <img src="{{ dossier_medical.qr_code }}" alt="QR Code">
     </div>

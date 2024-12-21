@@ -119,9 +119,9 @@
     {% if dossier_medical %}
         <div class="results">
             <h3>Résultat:</h3>
-            <p><strong>{{ dossier_medical.nom }} {{ dossier_medical.prenom }}</strong></p>
-            <p><strong>NSS:</strong> {{ dossier_medical.nss }}</p>
-            <a href="{% url 'view_dpi' nss=dossier_medical.nss %}">Voir le Dossier</a>
+            <p><strong>{{ dossier_medical.patient.nom }} {{ dossier_medical.patient.prenom }}</strong></p>
+            <p><strong>NSS:</strong> {{ dossier_medical.patient.nss }}</p>
+            <a href="{% url 'view_dpi' nss=dossier_medical.patient.nss %}">Voir le Dossier</a>
         </div>
     {% elif error %}
         <p style="color: red; text-align: center;">{{ error }}</p>

@@ -1,34 +1,66 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import action
-from rest_framework.parsers import MultiPartParser
 from rest_framework import status
-from .models import DossierMedical
-from .serializers import DossierMedicalSerializer
-from PIL import Image
-import pyzbar.pyzbar as pyzbar
-
+from .models import DossierMedical, Patient
+from .serializers import DossierMedicalSerializer, PatientSerializer
 
 class DossierMedicalViewSet(viewsets.ViewSet):
-    # Liste tous les dossiers médicaux existants dans la base de données
+    """
+    ViewSet for managing medical records (DossierMedical) and related patients.
+    """
+
+    # List all medical records with associated patient data
     def list(self, request):
-        queryset = DossierMedical.objects.all()  # Récupère tous les objets de type DossierMedical
-        serializer = DossierMedicalSerializer(queryset, many=True)  # Sérialise les données
-        return Response(serializer.data)  # Retourne les données au format JSON
+        queryset = DossierMedical.objects.select_related('patient').all()  # Include related Patient data
+        serialized_data = DossierMedicalSerializer(queryset, many=True)
+        return Response(serialized_data.data)  # Return serialized data as JSON
 
-    # Crée un nouveau dossier médical à partir des données reçues
+    # Create a new medical record and associate it with a patient
     def create(self, request):
-        serializer = DossierMedicalSerializer(data=request.data)  # Sérialise les données reçues
-        if serializer.is_valid():  # Vérifie que les données sont valides
-            serializer.save()  # Sauvegarde le nouveau dossier médical dans la base
-            return Response(serializer.data, status=status.HTTP_201_CREATED)  # Réponse avec le statut 201
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # Réponse avec les erreurs
+        print(f"Received data: {request.data}")  # Log received data
 
-    # Récupère un dossier médical spécifique grâce à son NSS
+        patient_data = {
+            'nss': request.data.get('nss'),
+            'nom': request.data.get('nom'),
+            'prenom': request.data.get('prenom'),
+            'date_naissance': request.data.get('date_naissance'),
+            'adresse': request.data.get('adresse'),
+            'telephone': request.data.get('telephone'),
+            'mutuelle': request.data.get('mutuelle'),
+        }
+        print(f"Extracted patient data: {patient_data}")  # Log patient data
+
+        try:
+            # Create or retrieve the patient
+            patient, created = Patient.objects.get_or_create(nss=patient_data['nss'], defaults=patient_data)
+            print(f"Patient created: {created}, Patient: {patient}")  # Log patient creation status
+
+            # Create the dossier medical
+            dossier = DossierMedical.objects.create(patient=patient)
+            print(f"Dossier created: {dossier}")  # Log dossier creation
+
+            return Response({
+                'patient': PatientSerializer(patient).data,
+                'qr_code': dossier.qr_code.url if dossier.qr_code else None,
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            print(f"Error: {e}")  # Log the error
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Retrieve a specific medical record by patient's NSS
     def retrieve(self, request, pk=None):
         try:
-            dossier = DossierMedical.objects.get(nss=pk)  # Recherche un dossier par NSS (clé primaire)
-            serializer = DossierMedicalSerializer(dossier)  # Sérialise les données du dossier trouvé
-            return Response(serializer.data)  # Retourne les données du dossier au format JSON
-        except DossierMedical.DoesNotExist:  # Si le dossier n'existe pas
-            return Response({'error': 'Dossier médical introuvable'}, status=status.HTTP_404_NOT_FOUND)  # Réponse 404
+            # Find the patient by NSS
+            patient = Patient.objects.get(nss=pk)
+            # Retrieve the medical record associated with the patient
+            dossier = DossierMedical.objects.get(patient=patient)
+
+            # Serialize the medical record and patient data
+            serialized_data = DossierMedicalSerializer(dossier)
+            return Response(serialized_data.data, status=status.HTTP_200_OK)
+
+        except Patient.DoesNotExist:
+            return Response({'error': 'Patient not found'}, status=status.HTTP_404_NOT_FOUND)
+        except DossierMedical.DoesNotExist:
+            return Response({'error': 'Medical record not found'}, status=status.HTTP_404_NOT_FOUND)
