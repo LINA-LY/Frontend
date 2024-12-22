@@ -4,6 +4,9 @@
 from django.shortcuts import render, redirect  # pour gérer les vues et les redirections
 from django.contrib import messages  # pour afficher des messages flash
 import requests  # pour envoyer des requêtes HTTP
+from .models import DossierMedical, Soin ,CompteRendu
+from django.http import HttpResponse, Http404
+
 
 # URL de l'API pour l'accès aux dossiers médicaux
 API_BASE_URL = "http://127.0.0.1:8000/dossier_patient/api/dossier-medical/"
@@ -66,3 +69,85 @@ def search_dpi(request):
             return render(request, 'search_dpi.html', {'error': error_message})  # Affiche une erreur si le dossier n'est pas trouvé
     # Si aucun NSS n'est fourni, rend la page de recherche vide
     return render(request, 'search_dpi.html')
+
+#######################################################soin##########################################################################
+
+
+def ajouter_soin(request, nss):
+    # Récupère le dossier médical en utilisant le NSS
+    try:
+        dossier = DossierMedical.objects.get(patient__nss=nss)
+    except DossierMedical.DoesNotExist:
+        raise Http404("Dossier médical introuvable")
+
+    if request.method == "POST":
+        date = request.POST.get("date")
+        medicaments_administres = request.POST.get("medicaments_administres")
+        soins_infirmiers = request.POST.get("soins_infirmiers")
+        observastions = request.POST.get("observastions")
+        infirmier = request.POST.get("infirmier")
+        
+        if date and  medicaments_administres and soins_infirmiers and observastions and infirmier:
+            Soin.objects.create(
+                dossier_medical=dossier,
+                date=date,
+                medicaments_administres = medicaments_administres,
+                soins_infirmiers = soins_infirmiers,
+                observastions = observastions,
+                infirmier=infirmier
+            )
+            return HttpResponse("Soin ajouté avec succès")
+        else:
+            return HttpResponse("Données incomplètes", status=400)
+
+    return render(request, "ajouter_soin.html", {"dossier": dossier})
+def lister_soins(request, nss):
+    # Récupère le dossier médical en utilisant le NSS
+    try:
+        dossier = DossierMedical.objects.get(patient__nss=nss)
+    except DossierMedical.DoesNotExist:
+        raise Http404("Dossier médical introuvable")
+
+    soins = dossier.soins.all()
+    return render(request, 'soins.html', {'dossier': dossier, 'soins': soins})
+
+
+
+# Vue pour ajouter un compte rendu
+def ajouter_compte_rendu(request, nss):
+    try:
+        dossier = DossierMedical.objects.get(patient__nss=nss)
+    except DossierMedical.DoesNotExist:
+        raise Http404("Dossier médical introuvable")
+
+    if request.method == "POST":
+        date = request.POST.get("date")
+        radiologue = request.POST.get("radiologue")
+        description = request.POST.get("description")
+        image_radio = request.FILES.get("image_radio")
+
+        if date and radiologue:
+            CompteRendu.objects.create(
+                dossier_medical=dossier,
+                date=date,
+                radiologue=radiologue,
+                description=description,
+                image_radio=image_radio
+            )
+            return HttpResponse("Compte rendu ajouté avec succès")
+        else:
+            return HttpResponse("Données incomplètes", status=400)
+
+    return render(request, "ajouter_compte_rendu.html", {"dossier": dossier})
+
+
+# Vue pour lister les comptes rendus
+def lister_compte_rendus(request, nss):
+    try:
+        dossier = DossierMedical.objects.get(patient__nss=nss)
+    except DossierMedical.DoesNotExist:
+        raise Http404("Dossier médical introuvable")
+
+    comptes_rendus = dossier.compte_rendus.all()
+    return render(request, 'compte_rendus.html', {'dossier': dossier, 'comptes_rendus': comptes_rendus})
+

@@ -1,19 +1,28 @@
 # serializers.py
 from rest_framework import serializers
-from .models import DossierMedical, Patient
+from .models import DossierMedical, Patient, Soin, CompteRendu
+
+class SoinSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Soin
+        fields = ['id', 'date', 'medicaments_administres','soins_infirmiers','observastions', 'infirmier']
+
+class CompteRenduSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompteRendu
+        fields = ['id', 'date', 'radiologue', 'description', 'image_radio', 'dossier_medical']
 
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
- # Liste des champs qui seront inclus dans la sérialisation (les données JSON renvoyées)
         fields = ['nss', 'nom', 'prenom', 'date_naissance', 'adresse', 'telephone', 'mutuelle']
 
-# Définition du serializer DossierMedicalSerializer pour transformer un objet DossierMedical en données JSON
-
 class DossierMedicalSerializer(serializers.ModelSerializer):
-    patient = PatientSerializer()  # Inclure le patient dans le serializer
+    patient = PatientSerializer()  # Include the patient in the response
+    soins = SoinSerializer(many=True, read_only=True)  # Include the list of soins
+    compte_rendus = CompteRenduSerializer(many=True, read_only=True)
+
 
     class Meta:
         model = DossierMedical
-# Liste des champs qui seront inclus dans la sérialisation (les données JSON renvoyées)
-        fields = ['patient', 'qr_code']
+        fields = ['patient', 'qr_code', 'soins' ,'compte_rendus' ,'medecin_traitant' ,'personne_contact']

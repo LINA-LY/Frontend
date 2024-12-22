@@ -23,6 +23,13 @@ urlpatterns = [
     # Route pour rechercher un DPI
     path('search_dpi/', views.search_dpi, name='search_dpi'),
     
+    path('ajouter_soin/<str:nss>/', views.ajouter_soin, name='ajouter_soin'),
+    path('lister_soins/<str:nss>/', views.lister_soins, name='lister_soins'),
+
+    path('ajouter-compte-rendu/<str:nss>/', views.ajouter_compte_rendu, name='ajouter_compte_rendu'),
+    path('compte-rendus/<str:nss>/', views.lister_compte_rendus, name='lister_compte_rendus'),
+
+    
     # Route pour l'API qui inclut toutes les routes générées automatiquement
     path('api/', include(router.urls)),
 ]

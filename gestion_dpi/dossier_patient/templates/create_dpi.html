@@ -80,7 +80,12 @@
 
         <label for="mutuelle">Mutuelle</label>
         <input type="text" name="mutuelle">
-
+        <label for="medecin_traitant">Médecin traitant</label>
+        <input type="text" name="medecin_traitant" value="{{ dossier.medecin_traitant }}">
+    
+        <label for="personne_contact">Personne à contacter</label>
+        <input type="text" name="personne_contact" value="{{ dossier.personne_contact }}">
+    
         <button type="submit" name="submit">Créer</button>
     </form>
 </body>

@@ -25,6 +25,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         .info-box img {
@@ -37,6 +38,26 @@
         .info-box p {
             font-size: 16px;
             margin: 10px 0;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .button-container a {
+            text-decoration: none;
+            color: white;
+            background-color: #1e90ff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .button-container a:hover {
+            background-color: #4682b4;
         }
     </style>
 </head>
@@ -52,6 +73,18 @@
         <p><strong>Mutuelle:</strong> {{ dossier_medical.patient.mutuelle|default:"Non spécifiée" }}</p>
         <h3>QR Code:</h3>
         <img src="{{ dossier_medical.qr_code }}" alt="QR Code">
+
+        <!-- Add Buttons -->
+        <div class="button-container">
+            <!-- Pass the dossier_medical.pk to the ajouter_soin URL -->
+
+            <a href="{% url 'ajouter_soin' dossier_medical.patient.nss %}">Ajouter un Soin</a>
+            <a href="{% url 'lister_soins' dossier_medical.patient.nss %}">Lister les Soins</a>
+
+            <a href="{% url 'ajouter_compte_rendu' dossier_medical.patient.nss %}">Ajouter un Compte Rendu</a>
+            <a href="{% url 'lister_compte_rendus' dossier_medical.patient.nss %}">Lister les Comptes Rendus</a>
+
+        </div>
     </div>
 </body>
 </html>

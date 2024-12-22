@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Soins</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e90ff;
+        }
+
+        ul {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        li {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        li strong {
+            color: #1e90ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Soins pour {{ dossier.patient.nom }} {{ dossier.patient.prenom }}</h1>
+    <ul>
+        {% for soin in soins %}
+            <li>
+                <strong>Date:</strong> {{ soin.date }}<br>
+                <strong>Medicaments Administres:</strong> {{ soin.medicaments_administres }}<br>
+                <strong>Soins Infirmiers:</strong> {{ soin.soins_infirmiers }}<br>
+                <strong>Observastions:</strong> {{ soin.observastions }}<br>
+                <strong>Infirmier:</strong> {{ soin.infirmier }}
+            </li>
+        {% endfor %}
+    </ul>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{% url 'ajouter_soin' dossier.id %}" style="text-decoration: none; color: white; background-color: #1e90ff; padding: 10px 20px; border-radius: 5px;">Ajouter un soin</a>
+    </div>
+</body>
+</html>
