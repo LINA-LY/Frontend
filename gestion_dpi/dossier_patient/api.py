@@ -12,7 +12,6 @@ class DossierMedicalViewSet(viewsets.ViewSet):
         queryset = DossierMedical.objects.select_related('patient').prefetch_related('soins').all()
         serialized_data = DossierMedicalSerializer(queryset, many=True)
         return Response(serialized_data.data)
-
     def create(self, request):
         patient_data = {
             'nss': request.data.get('nss'),
@@ -22,17 +21,35 @@ class DossierMedicalViewSet(viewsets.ViewSet):
             'adresse': request.data.get('adresse'),
             'telephone': request.data.get('telephone'),
             'mutuelle': request.data.get('mutuelle'),
+            'medecin': request.data.get('medecin'),
+            'personne': request.data.get('personne'),
         }
 
+        # Check for required fields
+        required_fields = ['nss', 'nom', 'prenom', 'date_naissance', 'adresse', 'telephone', 'mutuelle','medecin','personne']
+        for field in required_fields:
+            if not request.data.get(field):
+                return Response({'error': f"{field} is required."}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
-            patient = Patient.objects.get_or_create(nss=patient_data['nss'], defaults=patient_data)
+            # Get or create the patient
+            patient, created = Patient.objects.get_or_create(nss=patient_data['nss'], defaults=patient_data)
+
+            # Create the DossierMedical after ensuring the patient is retrieved or created
             dossier = DossierMedical.objects.create(patient=patient)
+
             return Response({
                 'patient': PatientSerializer(patient).data,
                 'qr_code': dossier.qr_code.url if dossier.qr_code else None,
             }, status=status.HTTP_201_CREATED)
         except Exception as e:
+            # Log the error for debugging purposes
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Error creating patient or dossier: {str(e)}")
+
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
     def retrieve(self, request, pk=None):
         try:

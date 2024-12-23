@@ -21,8 +21,8 @@ urlpatterns = [
     path('dpi/<str:nss>/', views.view_dpi, name='view_dpi'),
     
     # Route pour rechercher un DPI
-    path('search_dpi/', views.search_dpi, name='search_dpi'),
-    
+    path('search_dpi/', views.search_dpi, name='search_dpi'),  # <-- This remains as is
+
     path('ajouter_soin/<str:nss>/', views.ajouter_soin, name='ajouter_soin'),
     path('lister_soins/<str:nss>/', views.lister_soins, name='lister_soins'),
 

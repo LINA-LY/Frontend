@@ -70,6 +70,8 @@
         <p><strong>Date de Naissance:</strong> {{ dossier_medical.patient.date_naissance }}</p>
         <p><strong>Adresse:</strong> {{ dossier_medical.patient.adresse }}</p>
         <p><strong>Téléphone:</strong> {{ dossier_medical.patient.telephone }}</p>
+        <p><strong>Medecin traitant:</strong> {{ dossier_medical.patient.medecin }}</p>
+        <p><strong>Personne à contacter:</strong> {{ dossier_medical.patient.personne }}</p>
         <p><strong>Mutuelle:</strong> {{ dossier_medical.patient.mutuelle|default:"Non spécifiée" }}</p>
         <h3>QR Code:</h3>
         <img src="{{ dossier_medical.qr_code }}" alt="QR Code">

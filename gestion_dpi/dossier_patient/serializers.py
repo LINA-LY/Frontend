@@ -15,14 +15,11 @@ class CompteRenduSerializer(serializers.ModelSerializer):
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ['nss', 'nom', 'prenom', 'date_naissance', 'adresse', 'telephone', 'mutuelle']
+        fields = ['nss', 'nom', 'prenom', 'date_naissance', 'adresse', 'telephone', 'mutuelle','medecin','personne']
 
 class DossierMedicalSerializer(serializers.ModelSerializer):
     patient = PatientSerializer()  # Include the patient in the response
-    soins = SoinSerializer(many=True, read_only=True)  # Include the list of soins
-    compte_rendus = CompteRenduSerializer(many=True, read_only=True)
-
 
     class Meta:
         model = DossierMedical
-        fields = ['patient', 'qr_code', 'soins' ,'compte_rendus' ,'medecin_traitant' ,'personne_contact']
+        fields = ['patient', 'qr_code']

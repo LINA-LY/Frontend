@@ -25,6 +25,11 @@ class Patient(models.Model):
 
     # Mutuelle ou assurance, facultatif
     mutuelle = models.CharField(max_length=50, null=True, blank=True)
+    
+    medecin = models.TextField(default="medecin inconnue")
+
+    personne = models.TextField(default="numero inconnue")
+
 
     def __str__(self):
         return f"{self.nom} {self.prenom} - {self.nss}"
@@ -83,23 +88,20 @@ class DossierMedical(models.Model):
     Patient,
     on_delete=models.CASCADE,
     related_name="dossier_medical",
-    default=1  # ID du patient par défaut
 )
 
 
     # Champ pour le QR Code, facultatif
     qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
-    
-    # Méthode pour sauvegarder le modèle
     def save(self, *args, **kwargs):
-        # Générer un QR Code basé sur le NSS
-        qr_img = qrcode.make(self.patient.nss)
-        buffer = BytesIO()
-        qr_img.save(buffer, format='PNG')  # Enregistrer le QR Code au format PNG
-        buffer.seek(0)  # Réinitialiser le pointeur du buffer
-        self.qr_code.save(f'{self.patient.nss}_qr.png', File(buffer), save=False)  # Associer le fichier au champ qr_code
+        if self.patient and self.patient.nss:  # Vérifie si le patient et son NSS existent
+            qr_img = qrcode.make(self.patient.nss)
+            buffer = BytesIO()
+            qr_img.save(buffer, format='PNG')  # Enregistrer le QR Code au format PNG
+            buffer.seek(0)  # Réinitialiser le pointeur du buffer
+            self.qr_code.save(f'{self.patient.nss}_qr.png', File(buffer), save=False)  # Associer le fichier au champ qr_code
         super().save(*args, **kwargs)  # Appeler la méthode save() originale
-    
+
     # Méthode pour afficher le modèle comme une chaîne lisible
     def __str__(self):
         return f"{self.patient.nom} {self.patient.prenom} - {self.patient.nss}"

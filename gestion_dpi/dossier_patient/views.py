@@ -5,13 +5,17 @@ from django.shortcuts import render, redirect  # pour gérer les vues et les red
 from django.contrib import messages  # pour afficher des messages flash
 import requests  # pour envoyer des requêtes HTTP
 from .models import DossierMedical, Soin ,CompteRendu
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404,JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 # URL de l'API pour l'accès aux dossiers médicaux
 API_BASE_URL = "http://127.0.0.1:8000/dossier_patient/api/dossier-medical/"
 
 # Vue pour créer un DPI (Dossier Patient Informatisé)
+@csrf_exempt
+
 def create_dpi(request):
     if request.method == "POST":
         form_data = request.POST  # Récupère les données du formulaire
@@ -44,6 +48,8 @@ def create_dpi(request):
 
 
 # Vue pour afficher un DPI spécifique
+@csrf_exempt
+
 def view_dpi(request, nss):
     # Envoie une requête GET pour récupérer le dossier médical du patient en utilisant son NSS
     response = requests.get(f"{API_BASE_URL}{nss}/")
@@ -54,8 +60,11 @@ def view_dpi(request, nss):
         messages.error(request, "Dossier médical introuvable.")  # Affiche un message d'erreur si le dossier n'est pas trouvé
         return redirect('create_dpi')  # Redirige vers la page de création si le dossier est introuvable
 
-
+    
+    
 # Vue pour rechercher un DPI par NSS
+@csrf_exempt
+
 def search_dpi(request):
     nss = request.GET.get('nss')  # Récupère le NSS depuis les paramètres GET de la requête
     if nss:
@@ -69,6 +78,7 @@ def search_dpi(request):
             return render(request, 'search_dpi.html', {'error': error_message})  # Affiche une erreur si le dossier n'est pas trouvé
     # Si aucun NSS n'est fourni, rend la page de recherche vide
     return render(request, 'search_dpi.html')
+
 
 #######################################################soin##########################################################################
 
