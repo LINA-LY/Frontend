@@ -2,7 +2,6 @@
 
 .laborantin-container {
     max-width: 85%; 
-    height: 788vh;
     margin: 0 auto;
     padding: 20px;
     background-color: #F5F5F5;
@@ -89,6 +88,14 @@
   .cancel-btn {
     background-color: #f44336;
     color: white;
+  }
+  .chart-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
   }
   
   
