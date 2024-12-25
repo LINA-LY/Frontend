@@ -97,14 +97,13 @@ def ajouter_soin(request, nss):
         observastions = request.POST.get("observastions")
         infirmier = request.POST.get("infirmier")
         
-        if date and  medicaments_administres and soins_infirmiers and observastions and infirmier:
+        if date and  medicaments_administres and soins_infirmiers and observastions:
             Soin.objects.create(
                 dossier_medical=dossier,
                 date=date,
                 medicaments_administres = medicaments_administres,
                 soins_infirmiers = soins_infirmiers,
-                observastions = observastions,
-                infirmier=infirmier
+                observastions = observastions
             )
             return HttpResponse("Soin ajouté avec succès")
         else:

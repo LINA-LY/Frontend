@@ -10,7 +10,8 @@ from django.conf.urls.static import static  # pour gérer les fichiers statiques
 urlpatterns = [
     # Route pour accéder à l'interface d'administration Django
     path('admin/', admin.site.urls),
-    
+    path('api/', include('utilisateurs.urls')),
+
     # Inclut les URLs définies dans l'application 'dossier_patient'
     path('dossier_patient/', include('dossier_patient.urls')),
 ]

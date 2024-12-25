@@ -3,38 +3,6 @@ import qrcode
 from io import BytesIO
 from django.core.files import File
 
-# Modèle pour représenter les patients
-class Patient(models.Model):
-    # Numéro de Sécurité Sociale, unique pour chaque patient
-    nss = models.CharField(max_length=15, unique=True, null=True)
-
-    # Nom du patient
-    nom = models.CharField(max_length=50, default="Nom inconnu")
-
-    # Prénom du patient
-    prenom = models.CharField(max_length=50, default="Prénom inconnu")
-
-    # Date de naissance
-    date_naissance = models.DateField(default="2000-01-01")
-
-    # Adresse résidentielle
-    adresse = models.TextField(default="Adresse inconnue")
-
-    # Numéro de téléphone
-    telephone = models.CharField(max_length=15, default="0000000000")
-
-    # Mutuelle ou assurance, facultatif
-    mutuelle = models.CharField(max_length=50, null=True, blank=True)
-    
-    medecin = models.TextField(default="medecin inconnue")
-
-    personne = models.TextField(default="numero inconnue")
-
-
-    def __str__(self):
-        return f"{self.nom} {self.prenom} - {self.nss}"
-
-
 
 class Soin(models.Model):
     # Identifiant unique pour chaque soin (géré automatiquement par Django)
@@ -50,7 +18,13 @@ class Soin(models.Model):
 
 
     # Nom ou identifiant de l'infirmier ayant réalisé le soin
-    infirmier = models.CharField(max_length=100)
+    infirmier  = models.ForeignKey(
+        'utilisateurs.Infirmier',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='soins'
+    ) 
 
     # Référence au DossierMedical auquel ce soin appartient
     dossier_medical = models.ForeignKey(
@@ -72,7 +46,13 @@ class CompteRendu(models.Model):
         related_name='compte_rendus'
     )    
     date = models.DateField()
-    radiologue = models.CharField(max_length=255)
+    radiologue = models.ForeignKey(
+        'utilisateurs.Radiologue',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='compte_rendus'
+    ) 
     description = models.TextField()
     image_radio = models.ImageField(upload_to='radio_images/', null=True, blank=True)  # Optional image (e.g., X-ray)
 
@@ -85,7 +65,7 @@ class CompteRendu(models.Model):
 class DossierMedical(models.Model):
     # Référence au modèle Patient
     patient = models.OneToOneField(
-    Patient,
+    "utilisateurs.Patient",
     on_delete=models.CASCADE,
     related_name="dossier_medical",
 )

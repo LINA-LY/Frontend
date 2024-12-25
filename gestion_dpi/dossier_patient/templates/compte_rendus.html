@@ -64,7 +64,7 @@
         {% for compte_rendu in comptes_rendus %}
             <li>
                 <strong>Date:</strong> {{ compte_rendu.date }}<br>
-                <strong>Radiologue:</strong> {{ compte_rendu.radiologue }}<br>
+                <strong>Radiologue:</strong> {{ compte_rendu.radiologue.nom }} {{ compte_rendu.radiologue.prenom }}<br>
                 <strong>Description:</strong> {{ compte_rendu.description }}<br>
                 {% if compte_rendu.image_radio %}
                     <strong>Image Radiographie:</strong><br>

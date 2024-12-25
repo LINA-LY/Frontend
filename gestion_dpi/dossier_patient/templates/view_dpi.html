@@ -70,7 +70,7 @@
         <p><strong>Date de Naissance:</strong> {{ dossier_medical.patient.date_naissance }}</p>
         <p><strong>Adresse:</strong> {{ dossier_medical.patient.adresse }}</p>
         <p><strong>Téléphone:</strong> {{ dossier_medical.patient.telephone }}</p>
-        <p><strong>Medecin traitant:</strong> {{ dossier_medical.patient.medecin }}</p>
+        <p><strong>Medecin traitant:</strong> {{ dossier_medical.patient.medecin.nom }}</p>
         <p><strong>Personne à contacter:</strong> {{ dossier_medical.patient.personne }}</p>
         <p><strong>Mutuelle:</strong> {{ dossier_medical.patient.mutuelle|default:"Non spécifiée" }}</p>
         <h3>QR Code:</h3>
@@ -78,14 +78,14 @@
 
         <!-- Add Buttons -->
         <div class="button-container">
-            <!-- Pass the dossier_medical.pk to the ajouter_soin URL -->
-
             <a href="{% url 'ajouter_soin' dossier_medical.patient.nss %}">Ajouter un Soin</a>
             <a href="{% url 'lister_soins' dossier_medical.patient.nss %}">Lister les Soins</a>
 
             <a href="{% url 'ajouter_compte_rendu' dossier_medical.patient.nss %}">Ajouter un Compte Rendu</a>
             <a href="{% url 'lister_compte_rendus' dossier_medical.patient.nss %}">Lister les Comptes Rendus</a>
 
+        
+            
         </div>
     </div>
 </body>

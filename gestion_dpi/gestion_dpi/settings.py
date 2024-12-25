@@ -1,31 +1,48 @@
-# Import pymysql to use PyMySQL as the MySQL client
-import pymysql # type: ignore
+import os
+from pathlib import Path
+from dotenv import load_dotenv, dotenv_values
+import pymysql
+
+# Charger les variables d'environnement
+load_dotenv()
+
+# Configuration de pymysql pour MySQL
 pymysql.install_as_MySQLdb()
 
-
-
-from pathlib import Path
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Répertoire de base du projet
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Fichiers médias
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+# Fichiers statiques
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nf5@!gc%0n@^zpp!i3#l&($q))rsaj6-^t!bl&^g_##7#g^n!s'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# URL de base pour servir les fichiers statiques
+STATIC_URL = '/static/'
+
+# Répertoire où Django collectera tous les fichiers statiques avec la commande collectstatic
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Répertoires supplémentaires pour rechercher des fichiers statiques
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+ROOT_URLCONF = 'gestion_dpi.urls'
+
+
+# Clé secrète (chargée depuis .env)
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+# Mode debug
 DEBUG = True
 
+# Hôtes autorisés
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
+# Applications installées
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,10 +50,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dossier_patient',
-    'rest_framework',
+    'utilisateurs',  # App de ton ami
+    'dossier_patient',  # Ton app
+    'rest_framework',  # API REST
 ]
 
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -45,15 +64,38 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-]
-INTERNAL_IPS = [
-    '127.0.0.1',
 ]
 
 
-ROOT_URLCONF = 'gestion_dpi.urls'
+# Configuration de la base de données (variables d'environnement)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME', 'dpi_db'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'dpi'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '3306'),
+    }
+}
 
+# Validation des mots de passe
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+# Configuration des templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -70,63 +112,14 @@ TEMPLATES = [
     },
 ]
 
+# Application WSGI
 WSGI_APPLICATION = 'gestion_dpi.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Use MySQL backend (MariaDB is compatible with MySQL)
-        'NAME': 'dpi_db',  # Name of your database (you can change it)
-        'USER': 'root',  # Your MariaDB username (root for local development)
-        'PASSWORD': 'dpi',  # Your MariaDB root password
-        'HOST': 'localhost',  # Use localhost
-        'PORT': '3306',  # Default port for MySQL/MariaDB
-    }
-}
-
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
+# Internationalisation
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
+# Clé par défaut pour les champs de modèle
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

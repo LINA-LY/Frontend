@@ -47,7 +47,7 @@
                 <strong>Medicaments Administres:</strong> {{ soin.medicaments_administres }}<br>
                 <strong>Soins Infirmiers:</strong> {{ soin.soins_infirmiers }}<br>
                 <strong>Observastions:</strong> {{ soin.observastions }}<br>
-                <strong>Infirmier:</strong> {{ soin.infirmier }}
+                <strong>Infirmier:</strong> {{ soin.infirmier.nom }} {{ soin.infirmier.prenom }}
             </li>
         {% endfor %}
     </ul>

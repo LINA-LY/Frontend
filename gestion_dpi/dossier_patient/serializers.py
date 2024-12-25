@@ -1,6 +1,7 @@
 # serializers.py
 from rest_framework import serializers
-from .models import DossierMedical, Patient, Soin, CompteRendu
+from .models import DossierMedical, Soin, CompteRendu
+from utilisateurs.serializers import PatientSerializer  # Import du serializer Patient
 
 class SoinSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,11 +12,6 @@ class CompteRenduSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompteRendu
         fields = ['id', 'date', 'radiologue', 'description', 'image_radio', 'dossier_medical']
-
-class PatientSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Patient
-        fields = ['nss', 'nom', 'prenom', 'date_naissance', 'adresse', 'telephone', 'mutuelle','medecin','personne']
 
 class DossierMedicalSerializer(serializers.ModelSerializer):
     patient = PatientSerializer()  # Include the patient in the response
