@@ -1,0 +1,95 @@
+<div class="container">
+  <header class="header">
+    <div class="logo">
+      <img src="assets/logo.svg" alt="DPI Logo" />
+      <h1>DPI</h1>
+    </div>
+    <nav class="navbar">
+      <a routerLink="/consult-dpi" class="nav-link">Consulter DPI</a>
+      <a routerLink="/create-dpi" class="nav-link">Créer DPI</a>
+    </nav>
+    <button class="logout-btn">Déconnexion</button>
+  </header>
+
+  <div class="search-section">
+    <input type="text" placeholder="Rechercher par N° SS ..." class="search-input" />
+    <button class="qr-btn">
+      <i class="fas fa-qrcode"></i> Scanner QR code
+    </button>
+  </div>
+
+  <main class="content">
+    <h2 class="title">Dossier du patient - <span>Jean Dupont</span></h2>
+
+    <div class="grid">
+      <!-- Informations administratives -->
+      <div class="card">
+        <h3>Informations administratives</h3>
+        <ul class="info-list">
+          <li><strong>Nom :</strong> Jean Dupont</li>
+          <li><strong>N° Sécurité Sociale :</strong> 123-45-6789</li>
+          <li><strong>Date de naissance :</strong> 01/01/1980</li>
+          <li><strong>Adresse :</strong> 123 Rue de Paris, 75000</li>
+          <li><strong>Téléphone :</strong> 01 23 45 67 89</li>
+          <li><strong>Mutuelle :</strong> Mutuelle Santé Plus</li>
+          <li><strong>Médecin traitant :</strong> Dr Marie Lemoine</li>
+          <li><strong>Personne à Contacter :</strong> Pierre Dupont (Frère) - 01 23 45 67 90</li>
+        </ul>
+      </div>
+
+      <!-- Ordonnances et Bilans -->
+      <div class="card">
+        <h3>Ordonnances et Bilans</h3>
+        <div class="horizontal-grid">
+          <!-- Liste d'ordonnances -->
+          <div>
+            <h4>Ordonnances</h4>
+            <ul class="list">
+              <li>Ordonnance1</li>
+              <li>Ordonnance2</li>
+              <li>Ordonnance3</li>
+            </ul>
+            <button class="primary-btn">Rédiger Ordonnance</button>
+          </div>
+          <!-- Liste de bilans -->
+          <div>
+            <h4>Bilans</h4>
+            <ul class="list">
+              <li>Bilan1</li>
+              <li>Bilan2</li>
+              <li>Bilan3</li>
+            </ul>
+            <button class="primary-btn">Rédiger Bilan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Antécédents Médicaux -->
+      <div class="card full-width">
+        <h3>Antécédents Médicaux</h3>
+        <ul class="medical-history">
+          <li>
+            Chirurgie de l’appendicite
+            <button class="secondary-btn">Voir résumé</button>
+          </li>
+          <li>
+            Allergie aux pénicillines
+            <button class="secondary-btn">Voir résumé</button>
+          </li>
+          <li>
+            Hypertension artérielle
+            <button class="secondary-btn">Voir résumé</button>
+          </li>
+        </ul>
+        <button class="primary-btn">Rédiger résumé</button>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+      <button class="trend-btn">
+        Voir Radiographies et Graphiques de Tendance
+      </button>
+    </div>
+  </main>
+</div>
