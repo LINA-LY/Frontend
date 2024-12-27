@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Nécessaire pour ngFor et ngIf
+import { CommonModule } from '@angular/common'; // Nécessaire pour *ngFor et *ngIf
 
 @Component({
   selector: 'app-infirmier-interface',
@@ -23,3 +23,4 @@ export class InfirmierInterfaceComponent {
     this.patients = this.patients.filter(p => p !== patient);
   }
 }
+
