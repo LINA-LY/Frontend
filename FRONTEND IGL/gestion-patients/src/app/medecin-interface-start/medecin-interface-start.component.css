@@ -1,26 +1,68 @@
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 .container {
   text-align: center;
   margin: 0 auto;
   max-width: 900px;
   padding: 20px;
+  min-height: 100vh; /* Assure que la page occupe toute la hauteur */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  background-color: #003366; /* Bleu foncé */
+  padding: 10px 30px;
+  width: 100%; /* La navbar prend toute la largeur */
 }
 
-.header h1 {
-  color: #003366E5;
+.logo {
+  width: 50px;
+  height: auto;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.nav-link {
+  background: none;
+  color: white;
+  border: none;
+  font-size: 16px; /* Réduit la taille des liens */
+  margin: 0 20px;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.nav-link:hover {
+  background-color: #56C271; /* Bleu clair comme le bouton scanner */
+  border-radius: 15px; /* Bords arrondis */
+}
+
+.selected {
+  font-weight: bold; /* Mettre le texte en gras pour la page sélectionnée */
 }
 
 .btn-deconnexion {
   background-color: #ff6b6b;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 16px; /* Ajuste la taille du bouton */
   border-radius: 5px;
   cursor: pointer;
 }
@@ -31,9 +73,9 @@
 
 .search-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Centre les éléments */
   align-items: center;
-  margin-bottom: 30px;
+  margin: 20px 0; /* Espacement réduit */
 }
 
 .search-bar {
@@ -42,37 +84,48 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px 10px;
+  width: 70%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow sur la barre de recherche */
 }
 
 .NSS {
   border: none;
   outline: none;
-  padding: 10px;
-  width: 700px;
+  padding: 8px; /* Réduit l'espace dans le champ de recherche */
+  width: 100%;
 }
 
 .search-bar button {
   background: none;
   border: none;
   cursor: pointer;
-  color: #002147;
-  font-size: 18px;
+}
+
+.search-icon {
+  width: 18px;
+  height: auto;
+  margin-right: 5px;
 }
 
 .btn-scan {
-  background-color:#6FB1FC;
+  background-color: #6FB1FC;
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 8px 14px; /* Réduit la taille du bouton */
   border-radius: 5px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  height: 48px;
+  height: 40px; /* Hauteur réduite */
+  font-size: 14px; /* Texte du bouton plus petit */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow sur le bouton de scan */
+  margin-left: 15px; /* Ajout d'un espace entre les boutons */
 }
 
-.btn-scan i {
-  margin-right: 5px;
+.scan-icon {
+  width: 18px;
+  height: auto;
+  margin-left: 5px; /* L'icône de QR Code est à droite */
 }
 
 .btn-scan:hover {
@@ -81,26 +134,45 @@
 
 .content h2 {
   color: #003366E5;
-  font-size: 24px;
+  font-size: 18px; /* Réduit la taille du texte */
   margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 40px; /* Décale un peu plus bas le texte */
 }
 
 .content ul {
   list-style-type: none;
   padding: 0;
   color: #003366E5;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
 }
 
 .content ul li {
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Réduit l'espace entre les éléments */
+  font-size: 14px; /* Réduit la taille du texte */
 }
 
 .illustration img {
-  max-width: 100%;
+  max-width: 50%; /* Réduit la taille de l'image */
   height: auto;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
+@media screen and (max-width: 600px) {
+  .NSS {
+    width: 100%;
+  }
 
+  .search-section {
+    flex-direction: column; /* Met la barre de recherche et le bouton sous forme de colonne */
+    align-items: stretch;
+  }
 
-
+  .content h2 {
+    font-size: 16px; /* Plus petit sur les petits écrans */
+    margin-top: 20px;
+  }
+}
