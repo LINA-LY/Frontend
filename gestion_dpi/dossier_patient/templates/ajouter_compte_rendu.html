@@ -60,7 +60,7 @@
     </style>
 </head>
 <body>
-    <h1>Ajouter un Compte Rendu pour {{ dossier.patient.nom }} {{ dossier.patient.prenom }}</h1>
+    <h1>Ajouter un Compte Rendu pour {{ .nom }} {{ prenom }}</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         

@@ -1,11 +1,6 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password
-import qrcode
-from io import BytesIO
-from django.core.files import File
-from django.conf import settings
-from django.contrib.auth.models import AbstractUser
-from dossier_patient.models import DossierMedical
+from model_utils.managers import InheritanceManager
 
 
 # Create your models here.
@@ -24,7 +19,9 @@ class Utilisateur(models.Model):
 
     def set_unusable_password(self):
         self.password = ""  # Or use some placeholder if needed
-
+    objects = InheritanceManager()
+    def get_user_type(self):
+        raise NotImplementedError("Subclasses must implement this method.")
 
 class Administratif(Utilisateur):  # Inherits from Utilisateur + has admin advantages as predefined for django using the following attributes
     is_staff = True  # Grants access to Django admin interface
@@ -50,25 +47,41 @@ class Administratif(Utilisateur):  # Inherits from Utilisateur + has admin advan
 
 class Medecin(Utilisateur):  # Inherits from Utilisateur
     specialite = models.CharField(max_length=50, default='generaliste')
-
+    def get_user_type(self):
+        """
+        Override the method to return 'Medecin' for instances of the Medecin class.
+        """
+        return 'Medecin'
     def __str__(self):
         return f'Medecin: {self.nom} - {self.prenom}'
 
 
 class Radiologue(Utilisateur):  # Inherits from Utilisateur
-    pass  # No additional attributes, extends Utilisateur
+    def get_user_type(self):
+        """
+        Override the method to return 'Medecin' for instances of the Medecin class.
+        """
+        return 'Radiologue'
     def __str__(self):
         return f'Radiologue: {self.nom} - {self.prenom}'
 
 
 class Laborantin(Utilisateur):  # Inherits from Utilisateur
-    pass  # No additional attributes, extends Utilisateur
+    def get_user_type(self):
+        """
+        Override the method to return 'Medecin' for instances of the Medecin class.
+        """
+        return 'Laborantin'
     def __str__(self):
         return f'Laborantin: {self.nom} - {self.prenom}'
 
 
 class Infirmier(Utilisateur):  # Inherits from Utilisateur
-    pass  # No additional attributes, extends Utilisateur
+    def get_user_type(self):
+        """
+        Override the method to return 'Medecin' for instances of the Medecin class.
+        """
+        return 'Infirmier'
     def __str__(self):
         return f'Infirmier: {self.nom} - {self.prenom}'
 
@@ -86,7 +99,11 @@ class Patient(Utilisateur):
     # Mutuelle ou assurance, facultatif
     mutuelle = models.CharField(max_length=50, null=True, blank=True)
     personne = models.TextField(default="numero inconnue")
-
+    def get_user_type(self):
+        """
+        Override the method to return 'Medecin' for instances of the Medecin class.
+        """
+        return 'Patient'
     def __str__(self):
         return f'Patient: {self.nom} - {self.prenom}'
     
@@ -97,11 +114,13 @@ class Patient(Utilisateur):
 class Resume(models.Model):
     id_resume = models.AutoField(primary_key=True)
     date = models.DateField()  # Date of the resume
-    description = models.TextField()  # Summary description
+    antecedents = models.TextField()  # Summary description
+    observations = models.TextField()  # Summary description
+    diagnostic = models.TextField()  # Summary description
     dpi = models.ForeignKey(
         'dossier_patient.DossierMedical',
         on_delete=models.CASCADE,
-        related_name='consultations',
+        related_name='resumes',
         default=None        # This is done because of modification, should be deleted when first executing the code
     )  # Link to DPI (Dossier Patient Informatisé)
     medecin = models.ForeignKey(
@@ -174,7 +193,10 @@ class RapportImagerie(models.Model):
 class BilanBiologique(models.Model):
     id_bilan = models.AutoField(primary_key=True)
     date = models.DateField()  # Date of the bilan
-    result = models.TextField(blank=True, null=True)  # Results of the biological exam
+# Separate fields for glycimie, cholesterol, and pression arterielle
+    glycimie = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    cholesteroel = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    pression_arterielle = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField(blank=True, null=True)  # Optional description
     dpi = models.ForeignKey(
         'dossier_patient.DossierMedical',

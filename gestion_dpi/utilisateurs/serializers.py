@@ -59,20 +59,33 @@ class MedecinSerializer(serializers.ModelSerializer):
         return instance
 
 class PatientSerializer(serializers.ModelSerializer):
+    # Use MedecinSerializer to handle medecin_traitant as an object, not just the ID
+    medecin_traitant = MedecinSerializer()
+
     class Meta:
         model = Patient
-        fields = ['nss' ,'nom', 'prenom', 'date_naissance', 'telephone', 'adresse', 'mutuelle', 'password', 'email','medecin_traitant','personne']
+        fields = ['nss', 'nom', 'prenom', 'date_naissance', 'telephone', 'adresse', 'mutuelle', 'password', 'email', 'medecin_traitant', 'personne']
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
-        instance = self.Meta.model(**validated_data)
-        if password is not None:
-            # set_password is pre-built function to hash password
-            instance.set_password(password)
-        else:
-            instance.set_unusable_password()
-        instance.save()
-        return instance
+        # Pop the nested medecin_traitant data
+        medecin_traitant_data = validated_data.pop('medecin_traitant', None)
+        
+        # Create the patient instance
+        patient = self.Meta.model(**validated_data)
+
+        # If medecin_traitant data is provided, create the Medecin instance and assign it to the patient
+        if medecin_traitant_data:
+            medecin_traitant = Medecin.objects.create(**medecin_traitant_data)
+            patient.medecin_traitant = medecin_traitant
+
+        patient.save()  # Save the patient instance
+
+        return patient
+
 
 
 
@@ -125,11 +138,10 @@ class OrdonnanceSerializer(serializers.ModelSerializer):
 class BilanBiologiqueSerializer(serializers.ModelSerializer):
     class Meta:
         model = BilanBiologique
-        fields = ['id_bilan', 'date', 'result', 'description', 'dpi', 'laborantin','medecin']
+        fields = ['id_bilan', 'date', 'glycimie','cholesteroel','pression_arterielle', 'description', 'dpi', 'laborantin','medecin']
 
 
 class ResumeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resume
-        fields = ['id_resume', 'date', 'description', 'dpi', 'medecin']
-
+        fields = ['id_resume', 'date','antecedents','observations','diagnostic' , 'dpi', 'medecin']

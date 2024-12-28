@@ -59,6 +59,8 @@ class InfirmierAdmin(UtilisateurAdmin):
     list_display = UtilisateurAdmin.list_display
     search_fields = UtilisateurAdmin.search_fields
     list_filter = UtilisateurAdmin.list_filter
+    
+
 
 # Admin for SGPH
 @admin.register(SGPH)

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Patient</title>
+    <script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        header a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e90ff;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box {
+            margin-top: 20px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            color: #1e90ff;
+        }
+
+        .section p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .image-radio {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Dashboard Patient</h2>
+        <div>
+            <a href="{% url 'logout' %}">Déconnexion</a>
+        </div>
+    </header>
+
+    <h1>Bonjour, {{ nom }} {{ prenom }} !</h1>
+    <p>Bienvenue sur votre tableau de bord.</p>
+
+    <div class="container">
+        {% if dossier_data %}
+        <div class="info-box">
+            
+            <div class="section">
+                <h3>Informations Patient</h3>
+                <p><strong>NSS:</strong> {{ dossier_data.dossier.patient.nss }}</p>
+                <p><strong>Nom:</strong> {{ dossier_data.dossier.patient.nom }}</p>
+                <p><strong>Prénom:</strong> {{ dossier_data.dossier.patient.prenom }}</p>
+                <p><strong>Date de Naissance:</strong> {{ dossier_data.dossier.patient.date_naissance }}</p>
+                <p><strong>Adresse:</strong> {{ dossier_data.dossier.patient.adresse }}</p>
+                <p><strong>Téléphone:</strong> {{ dossier_data.dossier.patient.telephone }}</p>
+                <p><strong>Medecin traitant:</strong> {{ dossier_data.dossier.patient.medecin_traitant.nom }} {{ dossier_data.dossier.patient.medecin_traitant.prenom }}</p>
+                <p><strong>Personne à contacter:</strong> {{ dossier_data.dossier.patient.personne }}</p>
+            </div>
+
+        <!-- Section to display QR code -->
+        <div class="qr-code">
+            <h3>QR Code du Dossier Médical</h3>
+            {% if dossier_data.dossier.qr_code %}
+                <img src="{{ dossier_data.dossier.qr_code }}" alt="QR Code du Dossier Médical">
+            {% else %}
+                <p>Aucun QR code disponible pour ce dossier.</p>
+            {% endif %}
+        </div>
+            <!-- Sections with Bilans, Resumes, Soins, etc. -->
+            <div class="section">
+                <h3>Bilans Biologiques</h3>
+                {% for bilan in dossier_data.bilans %}
+                    <p><strong>Date:</strong> {{ bilan.date }}</p>
+                    <p><strong>Description:</strong> {{ bilan.description }}</p>
+                    <hr>
+                {% empty %}
+                    <p>Aucun bilan disponible.</p>
+                {% endfor %}
+            </div>
+
+            <div class="section">
+                <h3>Resumes</h3>
+                {% for resume in dossier_data.resumes %}
+                    <p><strong>Date:</strong> {{ resume.date }}</p>
+                    <p><strong>Antécédents médicaux:</strong> {{ resume.antecedents }}</p>
+                    <p><strong>Diagnostic:</strong> {{ resume.diagnostic }}</p>
+                    <p><strong>Observations:</strong> {{ resume.observations }}</p>
+                    <hr>
+                {% empty %}
+                    <p>Aucun resume disponible.</p>
+                {% endfor %}
+            </div>
+
+            <div class="section">
+                <h3>Soins</h3>
+                {% for soin in dossier_data.soins %}
+                    <p><strong>Date:</strong> {{ soin.date }}</p>
+                    <p><strong>Medicaments Administres:</strong> {{ soin.medicaments_administres }}</p>
+                    <p><strong>Soins Infirmiers:</strong> {{ soin.soins_infirmiers }}</p>
+                    <p><strong>Observations:</strong> {{ soin.observations }}</p>
+                    <p><strong>Infirmier:</strong> {{ soin.infirmier.nom }} {{ soin.infirmier.prenom }}</p>
+                    <hr>
+                {% empty %}
+                    <p>Aucun soin disponible.</p>
+                {% endfor %}
+            </div>
+
+            <div class="section">
+                <h3>Comptes Rendus</h3>
+                {% for compte_rendu in dossier_data.comptes_rendus %}
+                    <p><strong>Date:</strong> {{ compte_rendu.date }}</p>
+                    <p><strong>Radiologue:</strong> {{ compte_rendu.radiologue.nom }} {{ compte_rendu.radiologue.prenom }}</p>
+                    <p><strong>Description:</strong> {{ compte_rendu.description }}</p>
+                    {% if compte_rendu.image_radio %}
+                        <p><strong>Image Radiographie:</strong></p>
+                        <img src="{{ compte_rendu.image_radio }}" class="image-radio" alt="Image Radiographie">
+                    {% endif %}
+                    <hr>
+                {% empty %}
+                    <p>Aucun compte rendu disponible.</p>
+                {% endfor %}
+            </div>
+
+            <div class="section">
+                <h3>Ordonnances</h3>
+                {% for ordonnance in dossier_data.ordonnances %}
+                    <p><strong>Date:</strong> {{ ordonnance.date }}</p>
+                    <p><strong>Medecin:</strong> {{ ordonnance.medecin.nom }}</p>
+                    {% for traitement in ordonnance.medicaments.all %}
+                        <p><strong>Traitement:</strong> {{ traitement.medicament.nom }} ({{ traitement.quantite }}) - {{ traitement.description }} - {{ traitement.duree }}</p>
+                    {% endfor %}
+                    <hr>
+                {% empty %}
+                    <p>Aucune ordonnance disponible.</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% elif error %}
+            <p style="color: red; text-align: center;">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -55,7 +55,7 @@
     </style>
 </head>
 <body>
-    <h1>Ajouter un Soin pour {{ dossier.patient.nom }} {{ dossier.patient.prenom }}</h1>
+    <h1>Ajouter un Soin pour {{ nom }} {{ prenom }}</h1>
     <form method="post">
         {% csrf_token %}
         <label for="date">Date:</label>
@@ -67,8 +67,8 @@
         <label for="soins_infirmiers">Soins Infirmiers:</label>
         <textarea id="soins_infirmiers" name="soins_infirmiers" required></textarea>
 
-        <label for="observastions">Observastions:</label>
-        <textarea id="observastions" name="observastions" required></textarea>
+        <label for="observations">Observations:</label>
+        <textarea id="observations" name="observations" required></textarea>
 
 
         <button type="submit">Ajouter</button>

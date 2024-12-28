@@ -14,7 +14,7 @@ class Soin(models.Model):
     # Description du soin
     medicaments_administres = models.TextField()
     soins_infirmiers = models.TextField()
-    observastions = models.TextField()
+    observations = models.TextField()
 
 
     # Nom ou identifiant de l'infirmier ayant réalisé le soin

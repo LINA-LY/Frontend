@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulter un Dossier Patient</title>
+    <title>Consulter un Dossier Patient Complet</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,81 +12,115 @@
             margin: 0;
             padding: 20px;
         }
-
-        h1 {
-            text-align: center;
-            color: #1e90ff;
-        }
-
+        h1 { text-align: center; color: #1e90ff; }
         .info-box {
-            max-width: 500px;
+            max-width: 700px;
             margin: 0 auto;
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
         }
-
-        .info-box img {
-            display: block;
-            margin: 20px auto;
-            width: 150px;
-            height: 150px;
-        }
-
-        .info-box p {
-            font-size: 16px;
-            margin: 10px 0;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .button-container a {
-            text-decoration: none;
-            color: white;
-            background-color: #1e90ff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .button-container a:hover {
-            background-color: #4682b4;
+        .info-box p { font-size: 16px; margin: 10px 0; }
+        .section { margin-bottom: 20px; }
+        .section h3 { color: #1e90ff; margin-bottom: 10px; }
+        .qr-code img {
+            width: 150px;  /* Adjust width as necessary */
+            height: 150px;  /* Adjust height as necessary */
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-    <h1>Dossier Patient</h1>
+    <h1>Dossier Patient Complet</h1>
     <div class="info-box">
-        <p><strong>NSS:</strong> {{ dossier_medical.patient.nss }}</p>
-        <p><strong>Nom:</strong> {{ dossier_medical.patient.nom }}</p>
-        <p><strong>Prénom:</strong> {{ dossier_medical.patient.prenom }}</p>
-        <p><strong>Date de Naissance:</strong> {{ dossier_medical.patient.date_naissance }}</p>
-        <p><strong>Adresse:</strong> {{ dossier_medical.patient.adresse }}</p>
-        <p><strong>Téléphone:</strong> {{ dossier_medical.patient.telephone }}</p>
-        <p><strong>Medecin traitant:</strong> {{ dossier_medical.patient.medecin.nom }}</p>
-        <p><strong>Personne à contacter:</strong> {{ dossier_medical.patient.personne }}</p>
-        <p><strong>Mutuelle:</strong> {{ dossier_medical.patient.mutuelle|default:"Non spécifiée" }}</p>
-        <h3>QR Code:</h3>
-        <img src="{{ dossier_medical.qr_code }}" alt="QR Code">
-
-        <!-- Add Buttons -->
-        <div class="button-container">
-            <a href="{% url 'ajouter_soin' dossier_medical.patient.nss %}">Ajouter un Soin</a>
-            <a href="{% url 'lister_soins' dossier_medical.patient.nss %}">Lister les Soins</a>
-
-            <a href="{% url 'ajouter_compte_rendu' dossier_medical.patient.nss %}">Ajouter un Compte Rendu</a>
-            <a href="{% url 'lister_compte_rendus' dossier_medical.patient.nss %}">Lister les Comptes Rendus</a>
-
-        
+        <div class="section">
+            <h3>Informations Patient</h3>
             
+            <p><strong>NSS:</strong> {{ dossier_data.dossier.patient.nss }}</p>
+            <p><strong>Nom:</strong> {{ dossier_data.dossier.patient.nom }}</p>
+            <p><strong>Prénom:</strong> {{ dossier_data.dossier.patient.prenom }}</p>
+            <p><strong>Date de Naissance:</strong> {{ dossier_data.dossier.patient.date_naissance }}</p>
+            <p><strong>Adresse:</strong> {{ dossier_data.dossier.patient.adresse }}</p>
+            <p><strong>Téléphone:</strong> {{ dossier_data.dossier.patient.telephone }}</p>
+            <p><strong>Medecin traitant:</strong> {{ dossier_data.dossier.patient.medecin_traitant.nom }} {{ dossier_data.dossier.patient.medecin_traitant.prenom }}</p>
+            <p><strong>Personne à contacter:</strong> {{ dossier_data.dossier.patient.personne }}</p>
         </div>
+        <!-- Section to display QR code -->
+        <div class="qr-code">
+            <h3>QR Code du Dossier Médical</h3>
+            {% if dossier_data.dossier.qr_code %}
+                <img src="{{ dossier_data.dossier.qr_code }}" alt="QR Code du Dossier Médical">
+            {% else %}
+                <p>Aucun QR code disponible pour ce dossier.</p>
+            {% endif %}
+        </div>
+        <div class="section">
+            <h3>Bilans Biologiques</h3>
+            {% for bilan in dossier_data.bilans %}
+                <p><strong>Date:</strong> {{ bilan.date }}</p>
+                <p><strong>Description:</strong> {{ bilan.description }}</p>
+                <hr>
+            {% empty %}
+                <p>Aucun bilan disponible.</p>
+            {% endfor %}
+        </div>
+        <div class="section">
+            <h3>Resumes</h3>
+            {% for resume in dossier_data.resumes %}
+                <p><strong>Date:</strong> {{ resume.date }}</p>
+                <p><strong>Description:</strong> {{ resume.description }}</p>
+                <hr>
+            {% empty %}
+                <p>Aucun resume disponible.</p>
+            {% endfor %}
+        </div>
+        <div class="section">
+            <h3>Soins</h3>
+            {% for soin in dossier_data.soins %}
+                <strong>Date:</strong> {{ soin.date }}<br>
+                <strong>Medicaments Administres:</strong> {{ soin.medicaments_administres }}<br>
+                <strong>Soins Infirmiers:</strong> {{ soin.soins_infirmiers }}<br>
+                <strong>Observations:</strong> {{ soin.observations }}<br>
+                <strong>Infirmier:</strong> {{ soin.infirmier.nom }} {{ soin.infirmier.prenom }}
+                <hr>
+            {% empty %}
+                <p>Aucun soin disponible.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h3>Comptes Rendus</h3>
+            {% for compte_rendu in dossier_data.comptes_rendus %}
+                <strong>Date:</strong> {{ compte_rendu.date }}<br>
+                <strong>Radiologue:</strong> {{ compte_rendu.radiologue.nom }} {{ compte_rendu.radiologue.prenom }}<br>
+                <strong>Description:</strong> {{ compte_rendu.description }}<br>
+                {% if compte_rendu.image_radio %}
+                    <strong>Image Radiographie:</strong><br>
+                    <img src="{{ compte_rendu.image_radio }}" class="image-radio" alt="Image Radiographie"><br>
+                {% endif %}
+                <hr>
+            {% empty %}
+                <p>Aucun compte rendu disponible.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h3>Ordonnances</h3>
+            {% for ordonnance in dossier_data.ordonnances %}
+                <p><strong>Date:</strong> {{ ordonnance.date }}</p>
+                <p><strong>Medecin:</strong> {{ ordonnance.medecin.nom }}</p>
+                {% for traitement in ordonnance.medicaments.all %}
+                    <p><strong>Traitement:</strong> {{ traitement.medicament.nom }} ({{ traitement.quantite }}) - {{ traitement.description }} - {{ traitement.duree }}</p>
+                {% endfor %}
+                <hr>
+            {% empty %}
+                <p>Aucune ordonnance disponible.</p>
+            {% endfor %}
+        </div>
+
+
+
     </div>
 </body>
 </html>

@@ -13,9 +13,30 @@
             padding: 20px;
         }
 
+        header {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        header a:hover {
+            text-decoration: underline;
+        }
+
         h1 {
             text-align: center;
             color: #1e90ff;
+            margin-top: 20px;
         }
 
         form {
@@ -33,7 +54,7 @@
             font-weight: bold;
         }
 
-        input[type="text"], input[type="date"] {
+        input[type="text"], input[type="date"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin: 5px 0;
@@ -57,11 +78,27 @@
     </style>
 </head>
 <body>
+    <!-- Header Section with Logout and Dashboard Buttons -->
+    <header>
+        <h2>Créer un Dossier Patient</h2>
+        <div>
+            <a href="{% url 'dashboard' %}" class="btn">Consulter DPI</a>
+            <a href="{% url 'logout' %}" class="logout-button">Déconnexion</a>
+        </div>
+    </header>
+
+    <!-- Form Section -->
     <h1>Créer un Dossier Patient</h1>
     <form method="post">
         {% csrf_token %}
         <label for="nss">NSS</label>
         <input type="text" name="nss" required>
+        
+        <label for="email">Email</label>
+        <input type="text" name="email" required>
+
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" required>
 
         <label for="nom">Nom</label>
         <input type="text" name="nom" required>
@@ -81,13 +118,9 @@
         <label for="mutuelle">Mutuelle</label>
         <input type="text" name="mutuelle">
 
-        <label for="medecin">Medecin traitant</label>
-        <input type="text" name="medecin">
-
         <label for="personne">Personne à contacter</label>
         <input type="text" name="personne">
 
-    
         <button type="submit" name="submit">Créer</button>
     </form>
 </body>

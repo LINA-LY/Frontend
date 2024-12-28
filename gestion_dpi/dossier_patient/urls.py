@@ -14,7 +14,13 @@ router.register(r'dossier-medical', DossierMedicalViewSet, basename='dossier-med
 router.register(r'ordonnances', OrdonnanceViewSet, basename='ordonnance')
 # Définition des routes classiques et API
 urlpatterns = [
+    
+    
+    path('login/', views.login, name='login'),  # This is the route to the login page
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('logout/', views.logout, name='logout'),
     # Route pour créer un DPI
+    
     path('', views.create_dpi, name='create_dpi'),
     
     # Route pour afficher un DPI selon le NSS
@@ -23,13 +29,17 @@ urlpatterns = [
     # Route pour rechercher un DPI
     path('search_dpi/', views.search_dpi, name='search_dpi'),  # <-- This remains as is
 
-    path('ajouter_soin/<str:nss>/', views.ajouter_soin, name='ajouter_soin'),
+    path('ajouter_soin/<str:nss>/<str:nom>/<str:prenom>/', views.ajouter_soin, name='ajouter_soin'),
+
     path('lister_soins/<str:nss>/', views.lister_soins, name='lister_soins'),
 
-    path('ajouter_compte_rendu/<str:nss>/', views.ajouter_compte_rendu, name='ajouter_compte_rendu'),
+    path('ajouter_compte_rendu/<str:nss>/<str:nom>/<str:prenom>/', views.ajouter_compte_rendu, name='ajouter_compte_rendu'),
     path('lister_comptes_rendus/<str:nss>/', views.lister_compte_rendus, name='lister_compte_rendus'),
 
+    path('rediger_resume/<str:nss>/', views.rediger_resume, name='rediger_resume'),
+    path('rediger_bilan/<str:nss>/', views.rediger_bilan, name='rediger_bilan'),
     
+    path('remplir_bilan/<int:id_bilan>/<str:nom>/<str:prenom>/', views.remplir_bilan, name='remplir_bilan'),
     # Route pour l'API qui inclut toutes les routes générées automatiquement
     path('api/', include(router.urls)),
 ]

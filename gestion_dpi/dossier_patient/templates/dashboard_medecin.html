@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Medecin</title>
+    <script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        header a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e90ff;
+            margin-top: 20px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #007acc;
+        }
+
+        #video-container {
+            text-align: center;
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+        }
+
+        video {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            border: 2px solid #007acc;
+        }
+
+        #nss-result {
+            font-size: 18px;
+            margin-top: 10px;
+            text-align: center;
+            color: green;
+        }
+
+        .info-box {
+            max-width: 700px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+            margin-top: 15px;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .action-buttons button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .action-buttons button:hover {
+            background-color: #007acc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Dashboard Medecin</h2>
+        <div>
+            <a href="{% url 'create_dpi' %}" class="btn">Créer DPI</a>
+            <a href="{% url 'logout' %}" class="logout-button">Déconnexion</a>
+        </div>
+    </header>
+
+    <h1>Bonjour, {{ nom }} {{ prenom }} !</h1>
+    <p>Bienvenue sur votre tableau de bord.</p>
+
+    <!-- Search by NSS -->
+    <form method="get" action="{% url 'search_dpi' %}">
+        {% csrf_token %}
+        <label for="nss">Rechercher par NSS</label>
+        <input type="text" id="nss" name="nss" required>
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <!-- QR Code Scanner -->
+    <div id="video-container">
+        <video id="video" autoplay></video>
+    </div>
+    <button id="start-scan">Scanner QR Code</button>
+    <p id="nss-result"></p>
+
+
+
+    <!-- Display Detailed Results -->
+    {% if dossier_data %}
+    <div class="info-box">
+        
+        <div class="section">
+            <h3>Informations Patient</h3>
+            <p><strong>NSS:</strong> {{ dossier_data.dossier.patient.nss }}</p>
+            <p><strong>Nom:</strong> {{ dossier_data.dossier.patient.nom }}</p>
+            <p><strong>Prénom:</strong> {{ dossier_data.dossier.patient.prenom }}</p>
+            <p><strong>Date de Naissance:</strong> {{ dossier_data.dossier.patient.date_naissance }}</p>
+            <p><strong>Adresse:</strong> {{ dossier_data.dossier.patient.adresse }}</p>
+            <p><strong>Téléphone:</strong> {{ dossier_data.dossier.patient.telephone }}</p>
+            <p><strong>Medecin traitant:</strong> {{ dossier_data.dossier.patient.medecin_traitant.nom }} {{ dossier_data.dossier.patient.medecin_traitant.prenom }}</p>
+            <p><strong>Personne à contacter:</strong> {{ dossier_data.dossier.patient.personne }}</p>
+        </div>
+
+                <!-- Section to display QR code -->
+                <div class="qr-code">
+                    <h3>QR Code du Dossier Médical</h3>
+                    {% if dossier_data.dossier.qr_code %}
+                        <img src="{{ dossier_data.dossier.qr_code }}" alt="QR Code du Dossier Médical">
+                    {% else %}
+                        <p>Aucun QR code disponible pour ce dossier.</p>
+                    {% endif %}
+                </div>
+
+                
+            <!-- New Buttons -->
+            <div class="action-buttons">
+                <a href="{% url 'rediger_resume' dossier_data.dossier.patient.nss %}" class="btn">Rediger Resume</a>
+                <a href="{% url 'rediger_bilan' dossier_data.dossier.patient.nss %}" class="btn">Rediger Bilan</a>
+            </div>
+        <!-- Sections with resumes, ordonnances, and bilans -->
+        <div class="section">
+            <h3>Bilans Biologiques</h3>
+            {% for bilan in dossier_data.bilans %}
+                <p><strong>Date:</strong> {{ bilan.date }}</p>
+                <p><strong>Description:</strong> {{ bilan.description }}</p>
+                <hr>
+            {% empty %}
+                <p>Aucun bilan disponible.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h3>Resumes</h3>
+            {% for resume in dossier_data.resumes %}
+                <p><strong>Date:</strong> {{ resume.date }}</p>
+                <p><strong>Antécédents médicaux:</strong> {{ resume.antecedents }}</p>
+                <p><strong>Diagnostic:</strong> {{ resume.diagnostic }}</p>
+                <p><strong>Observations:</strong> {{ resume.observations }}</p>
+                <hr>
+            {% empty %}
+                <p>Aucun resume disponible.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h3>Soins</h3>
+            {% for soin in dossier_data.soins %}
+                <strong>Date:</strong> {{ soin.date }}<br>
+                <strong>Medicaments Administres:</strong> {{ soin.medicaments_administres }}<br>
+                <strong>Soins Infirmiers:</strong> {{ soin.soins_infirmiers }}<br>
+                <strong>Observations:</strong> {{ soin.observations }}<br>
+                <strong>Infirmier:</strong> {{ soin.infirmier.nom }} {{ soin.infirmier.prenom }}
+                <hr>
+            {% empty %}
+                <p>Aucun soin disponible.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h3>Comptes Rendus</h3>
+            {% for compte_rendu in dossier_data.comptes_rendus %}
+                <strong>Date:</strong> {{ compte_rendu.date }}<br>
+                <strong>Radiologue:</strong> {{ compte_rendu.radiologue.nom }} {{ compte_rendu.radiologue.prenom }}<br>
+                <strong>Description:</strong> {{ compte_rendu.description }}<br>
+                {% if compte_rendu.image_radio %}
+                    <strong>Image Radiographie:</strong><br>
+                    <img src="{{ compte_rendu.image_radio }}" class="image-radio" alt="Image Radiographie"><br>
+                {% endif %}
+                <hr>
+            {% empty %}
+                <p>Aucun compte rendu disponible.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h3>Ordonnances</h3>
+            {% for ordonnance in dossier_data.ordonnances %}
+                <p><strong>Date:</strong> {{ ordonnance.date }}</p>
+                <p><strong>Medecin:</strong> {{ ordonnance.medecin.nom }}</p>
+                {% for traitement in ordonnance.medicaments.all %}
+                    <p><strong>Traitement:</strong> {{ traitement.medicament.nom }} ({{ traitement.quantite }}) - {{ traitement.description }} - {{ traitement.duree }}</p>
+                {% endfor %}
+                <hr>
+            {% empty %}
+                <p>Aucune ordonnance disponible.</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% elif error %}
+        <p style="color: red; text-align: center;">{{ error }}</p>
+    {% endif %}
+
+    <script>
+        const startScanButton = document.getElementById("start-scan");
+        const videoContainer = document.getElementById("video-container");
+        const video = document.getElementById("video");
+        const nssResult = document.getElementById("nss-result");
+        let stream;
+
+        // Start QR code scanning when the button is clicked
+        startScanButton.addEventListener("click", () => {
+            videoContainer.style.display = "block"; // Show the rectangle for the camera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((s) => {
+                    stream = s;
+                    video.srcObject = stream;
+                    video.play();
+                    requestAnimationFrame(scanQRCode); // Start scanning
+                })
+                .catch((err) => {
+                    console.error("Erreur d'accès à la caméra:", err);
+                    alert("Erreur lors de l'accès à la caméra.");
+                });
+        });
+
+        function scanQRCode() {
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d");
+                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+                if (code) {
+                    const nss = code.data; // Extract NSS from the QR code
+                    nssResult.textContent = `NSS détecté: ${nss}`;
+                    stopScanning(); // Stop the scanning process
+                    redirectToSearch(nss); // Redirect to search DPI with NSS
+                }
+            }
+            requestAnimationFrame(scanQRCode); // Keep scanning
+        }
+
+        function stopScanning() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            videoContainer.style.display = "none"; // Hide the rectangle after scanning
+        }
+
+        function redirectToSearch(nss) {
+            window.location.href = `/dossier_patient/search_dpi/?nss=${nss}`;
+        }
+    </script>
+</body>
+</html>
