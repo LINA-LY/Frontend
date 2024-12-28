@@ -1,3 +1,4 @@
+/* Style global */
 * {
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
@@ -11,21 +12,27 @@ html, body {
 .container {
   text-align: center;
   margin: 0 auto;
-  max-width: 900px;
   padding: 20px;
   min-height: 100vh; /* Assure que la page occupe toute la hauteur */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start; /* Assure que tout prend de l'espace verticalement */
+  padding-top: 60px; /* Ajuste ce padding pour éviter que le contenu soit masqué par la navbar */
 }
 
+/* Style de la navbar */
+/* Style de la navbar */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #003366; /* Bleu foncé */
+  background-color: #003366;
   padding: 10px 30px;
-  width: 100%; /* La navbar prend toute la largeur */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 .logo {
@@ -43,33 +50,36 @@ html, body {
   background: none;
   color: white;
   border: none;
-  font-size: 16px; /* Réduit la taille des liens */
+  font-size: 16px;
   margin: 0 20px;
   cursor: pointer;
   padding: 10px 20px;
 }
 
 .nav-link:hover {
-  background-color: #56C271; /* Bleu clair comme le bouton scanner */
-  border-radius: 15px; /* Bords arrondis */
+  background-color: #56C271;
+  border-radius: 15px;
 }
 
 .selected {
-  font-weight: bold; /* Mettre le texte en gras pour la page sélectionnée */
+  font-weight: bold;
 }
 
 .btn-deconnexion {
   background-color: #ff6b6b;
   color: white;
   border: none;
-  padding: 8px 16px; /* Ajuste la taille du bouton */
+  padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
+  height: 40px; /* Taille fixe pour le bouton */
+  width: auto;
 }
 
 .btn-deconnexion:hover {
   background-color: #ff4c4c;
 }
+
 
 .search-section {
   display: flex;
@@ -91,7 +101,7 @@ html, body {
 .NSS {
   border: none;
   outline: none;
-  padding: 8px; /* Réduit l'espace dans le champ de recherche */
+  padding: 8px;
   width: 100%;
 }
 
@@ -111,34 +121,41 @@ html, body {
   background-color: #6FB1FC;
   color: white;
   border: none;
-  padding: 8px 14px; /* Réduit la taille du bouton */
+  padding: 8px 14px;
   border-radius: 5px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  height: 40px; /* Hauteur réduite */
-  font-size: 14px; /* Texte du bouton plus petit */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow sur le bouton de scan */
-  margin-left: 15px; /* Ajout d'un espace entre les boutons */
+  height: 40px;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: 15px;
 }
 
 .scan-icon {
   width: 18px;
   height: auto;
-  margin-left: 5px; /* L'icône de QR Code est à droite */
+  margin-left: 5px;
 }
 
 .btn-scan:hover {
   background-color: #93c3fa;
 }
 
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
 .content h2 {
   color: #003366E5;
-  font-size: 18px; /* Réduit la taille du texte */
+  font-size: 18px;
   margin-bottom: 20px;
   font-weight: bold;
-  text-align: center;
-  margin-top: 40px; /* Décale un peu plus bas le texte */
+  text-align: center; /* Ajouté pour centrer le titre */
+  margin-top: 40px;
 }
 
 .content ul {
@@ -151,14 +168,25 @@ html, body {
 }
 
 .content ul li {
-  margin-bottom: 8px; /* Réduit l'espace entre les éléments */
-  font-size: 14px; /* Réduit la taille du texte */
+  margin-bottom: 8px;
+  font-size: 14px;
 }
 
 .illustration img {
-  max-width: 50%; /* Réduit la taille de l'image */
+  max-width: 50%;
   height: auto;
   margin-top: 15px;
+}
+
+.footer-rectangle {
+  background-color: #e2e2f1; /* Violet clair */
+  padding: 20px 0;
+  border-radius: 20px;
+  margin-top: 40px; /* Plus d'espace entre la navbar et le rectangle */
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 600px) {
@@ -167,12 +195,11 @@ html, body {
   }
 
   .search-section {
-    flex-direction: column; /* Met la barre de recherche et le bouton sous forme de colonne */
-    align-items: stretch;
+    flex-direction: column;
   }
 
   .content h2 {
-    font-size: 16px; /* Plus petit sur les petits écrans */
+    font-size: 16px;
     margin-top: 20px;
   }
 }

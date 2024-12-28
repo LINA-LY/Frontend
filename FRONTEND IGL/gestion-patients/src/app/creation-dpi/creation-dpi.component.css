@@ -1,146 +1,210 @@
-.H{
-  background-color: #003366;
-}
-.header {
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  padding: 20px; 
-  background-color: #003366; 
-  color: white; 
+/* Style global */
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  font-size: 16px;
+  background-color: #ffffff;
+}
 
-  .dec{
-    color: white; 
-    font-size: 16px;
-    padding: 10px 20px; 
-    border: none; 
-    border-radius: 5px;
-    cursor: pointer; 
-    transition: all 0.3s ease; 
-    background-color: #E57373;
-  }
-  
-  .dec:hover {
-    background-color: #ee9595;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
-  }
-  
-  
-  .dev:active {
-    background-color: #ee9595;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
-  }
-
-
-
-.general{
-  background-color: #F5F5F5;
-  border-radius: 10px;
-  width: 80%; 
+.container {
+  max-width: 100%;
   margin: 0 auto;
-}
-.phrase1{
- color: #003366;
- text-align: center;
-}
-.phrase2{
-color: #003366;
-size: 20px;
-text-align: center;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 60px; /* Ajuste ce padding pour éviter que le contenu soit masqué par la navbar */
 }
 
-.red{
-  color: red;
-  margin-left: 3px;
+/* Style de la navbar */
+/* Style de la navbar */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #003366;
+  padding: 10px 30px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
-.info-id{
-  background-color: #fcfcfc; 
-  border-radius: 8px; 
-  padding: 20px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  margin: 20px auto; 
-  max-width: 800px; 
-  
+.logo {
+  width: 50px;
+  height: auto;
 }
-.title1{
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.nav-link {
+  background: none;
+  color: white;
+  border: none;
+  font-size: 16px;
+  margin: 0 20px;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.nav-link:hover {
+  background-color: #56C271;
+  border-radius: 15px;
+}
+
+.selected {
+  font-weight: bold;
+}
+
+.btn-deconnexion {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 40px; /* Taille fixe pour le bouton */
+  width: auto;
+}
+
+.btn-deconnexion:hover {
+  background-color: #ff4c4c;
+}
+
+
+.content {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  flex-grow: 1;
+}
+
+h2 {
+  color: #003366;
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: regular;
+  text-align: center; /* Ajouté pour centrer le titre */
+}
+
+.intro-text {
+  color: #003366;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: light;
+}
+
+.info-id {
+  background-color: #fcfcfc;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 15px 0;
+}
+
+.info-id h3 {
   color: #003366;
   margin-bottom: 10px;
+  font-weight: semibold;
 }
-.label1{
+
+label {
   display: block;
-  font-weight: bold;
+  font-weight: medium;
   margin-bottom: 5px;
   color: #333;
 }
 
-.in{
+.in {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 15px;
-  border: 1px solid #ced4da;
+  border: 1px solid #003366;
   border-radius: 5px;
-  box-sizing: border-box; 
-  font-size: 14px;
 }
 
 input::placeholder {
   color: #adb5bd;
-  font-style: italic;
 }
+
 input:focus {
   outline: none;
-  border-color: #1d3557; /* Couleur bleue */
-  box-shadow: 0 0 5px rgba(29, 53, 87, 0.3);
+  border-color: #003366;
 }
 
-button{
-  color: white; 
-  font-size: 16px;
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 5px;
-  cursor: pointer; 
-  transition: all 0.3s ease; 
-}
-
-button:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
-}
-
-
-button:active {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
-}
-
-.Annuler{
-  background-color: #E57373;
-  
-}
-
-.Annuler:active{
-  background-color: #ee9595;
-}
-
-.Annuler:hover{
-  background-color: #ee9595;
-}
-.creer{
- background-color: #56C271;
-}
-
-.creer:active{
-  background-color: #6fd288;
-}
-
-.creer:hover{
-  background-color: #6fd288;
+.red {
+  color: red;
 }
 
 .button-container {
-  display: flex; 
-  justify-content: flex-end; 
-  gap: 20px; 
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.creer {
+  order: 1;
+}
+
+.Annuler {
+  order: 2;
+}
+
+button {
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+}
+
+.creer {
+  background-color: #56C271;
+  color: white;
+}
+
+.creer:hover {
+  background-color: #4CAF50;
+}
+
+.Annuler {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.Annuler:hover {
+  background-color: #ff4c4c;
+}
+
+.footer-rectangle {
+  background-color: #e2e2f1;
+  padding: 20px 0;
+  border-radius: 20px;
+  margin-top: 40px; /* Plus d'espace entre la navbar et le rectangle */
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 600px) {
+  .content h2 {
+    font-size: 18px;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
 }
