@@ -1,0 +1,23 @@
+<div class="compterendu-container">
+    <h1 class="page-title">Rédiger un Compte-Rendu</h1>
+  
+    <!-- Rectangle avec la date, nom du patient, et radiologue -->
+    <div class="info-banner">
+      <span class="info-item">Date : {{ todayDate }}</span>
+      <span class="info-item">Nom du patient : Jean Dupont</span>
+      <span class="info-item">Radiologue : XXXXX</span>
+    </div>
+  
+    <!-- Zone de rédaction du compte-rendu -->
+    <div class="form-card">
+      <textarea placeholder="Rédiger le Compte-Rendu ici ..." class="textarea"></textarea>
+    </div>
+  
+    <!-- Boutons en bas -->
+    <div class="button-container">
+      <button class="upload-button" (click)="onAttachRadio()">Joindre Radio *</button>
+      <button class="save-button" (click)="saveReport()">Enregistrer le Compte Rendu</button>
+      <button class="cancel-button" (click)="cancel()">Annuler</button>
+    </div>
+  </div>
+  
