@@ -11,7 +11,7 @@ import { CompterenduComponent } from './compterendu/compterendu.component';
 
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/compterendu', pathMatch: 'full' },
+  { path: '', redirectTo: '/ordonnance', pathMatch: 'full' },
   { path: 'ordonnance', component: OrdonnanceComponent },
   { path: 'bilan', component: BilanComponent },
   { path: 'laborantin', component: LaborantinComponent },
