@@ -1,0 +1,141 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f5f5f5; /* Couleur de fond générale */
+}
+
+.left-section {
+  flex: 1;
+  background-color: #003366;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  border-radius: 20px; /* Arrondi des bords */
+  margin: 20px;
+}
+
+.left-section img {
+  width: 85%; /* Taille augmentée */
+  max-width: 450px; /* Limite maximale pour éviter une image trop grande */
+  margin-bottom: 30px; /* Espacement avec le texte */
+}
+
+.phrase {
+  font-family: "Inter", sans-serif;
+  font-size: 20px; /* Texte plus grand */
+  font-weight: 600; /* Texte légèrement plus épais */
+  color: #ffffff;
+  line-height: 1.8; /* Espacement pour meilleure lisibilité */
+  width: 90%; /* Plus large pour mieux remplir l'espace */
+}
+
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centre verticalement */
+  align-items: flex-start; /* Alignement à gauche */
+  padding: 40px;
+  padding-left: 80px; /* Décalage à droite */
+  position: relative;
+}
+
+.container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.imgdpi {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+}
+
+.Bien {
+  font-family: 'Inter', sans-serif; /* Police élégante */
+  font-size: 25px; /* Taille ajustée */
+  font-weight: 400; /* Plus léger pour un rendu clair */
+  line-height: 1.5;
+  color: #003366;
+  margin-bottom: 5px; /* Espacement entre "Bienvenue !" et "Connexion" */
+}
+
+.Connexion {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  font-weight: 700; /* Texte en gras */
+  line-height: 1.5;
+  color: #003366;
+  margin-bottom: 20px; /* Espacement entre "Connexion" et le formulaire */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Contenu recentré horizontalement */
+  width: 100%;
+  max-width: 450px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 15px 0; /* Espacement augmenté entre les champs */
+  font-size: 16px;
+  border: 2px solid #ccc; /* Bordure par défaut grise */
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  color: #003366;
+  transition: border-color 0.3s ease; /* Transition douce pour l'effet */
+}
+
+input:focus {
+  outline: none; /* Supprime le contour par défaut */
+  border-color: #003366; /* Bordure bleu foncé au focus */
+}
+
+button {
+  background-color: #56C271;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  height: 50px; /* Bouton plus grand */
+  width: 100%;
+  max-width: 450px;
+  margin-top: 20px;
+  font-size: 18px; /* Texte du bouton agrandi */
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.forgot {
+  text-align: right;
+  width: 100%;
+  color: #00336680;
+  font-size: 14px;
+  margin: 10px 0;
+  text-decoration: none;
+}
+
+.forgot:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  text-align: center;
+}

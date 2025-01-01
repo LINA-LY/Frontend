@@ -1,0 +1,22 @@
+<div class="login-container">
+  <div class="left-section">
+    <img src="assets/doctor-team.png" alt="Doctor Team" />
+    <p class="phrase">Connectez-vous et simplifiez la gestion de vos dossiers patients dès maintenant !</p>
+  </div>
+  <div class="right-section">
+    <div class="container">
+      <img src="assets/logo.svg" alt="logo" class="imgdpi">
+    </div>
+    <h2 class="Bien">Bienvenue !</h2>
+    <h3 class="Connexion">Connexion</h3>
+    <form (ngSubmit)="onSubmit()">
+      <input class="email" type="email" placeholder="E-mail" [value]="email" (input)="onEmailChange($event)" name="email" required />
+      <input class="password" type="password" placeholder="Mot de passe" [value]="password" (input)="onPasswordChange($event)" name="password" required />
+      <a href="#" class="forgot">Forgot password ?</a>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
+<!-- <div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div> -->
