@@ -60,7 +60,7 @@ export class CreateDpiComponent {
         const nss = response.patient?.nss; // Récupère le NSS de la réponse
         if (nss) {
           // Redirige vers la page de recherche DPI avec le NSS en paramètre
-          this.router.navigate(['/dossier-patient', 'search-dpi'], );
+          this.router.navigate(['/medecin-interface-start']);
           alert('DPI créé avec succès !'); // Affiche un message de succès
         } else {
           alert('Erreur lors de la création du DPI, NSS manquant.'); // Affiche une erreur si le NSS est manquant

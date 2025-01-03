@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importez CommonModule
-import { FormsModule } from '@angular/forms'; // Importez FormsModule
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  standalone: true, // Déclarez ce composant comme standalone
-  imports: [CommonModule, FormsModule], // Importez les modules nécessaires ici
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -21,7 +21,7 @@ export class LoginComponent {
   onSubmit(event: Event) {
     event.preventDefault(); // Empêche le comportement par défaut du formulaire
 
-    console.log('Tentative de connexion avec :', { email: this.email, password: this.password }); // Log des données du formulaire
+    console.log('Tentative de connexion avec :', { email: this.email, password: this.password });
 
     this.errorMessage = ''; // Réinitialiser le message d'erreur
 
@@ -34,16 +34,9 @@ export class LoginComponent {
     // Appel du service de connexion
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
-        console.log('Réponse du backend:', response); // Log la réponse du backend
+        console.log('Réponse du backend:', response);
 
         if (response.token) {
-          // Stocker le token et le rôle dans le localStorage
-          localStorage.setItem('auth_token', response.token);
-          localStorage.setItem('userData', JSON.stringify(response.user));
-          localStorage.setItem('role', response.role);
-
-          console.log('Connexion réussie. Redirection en fonction du rôle...'); // Log de la redirection
-
           // Rediriger en fonction du rôle
           this.redirectBasedOnRole(response.role);
         } else {
@@ -51,7 +44,7 @@ export class LoginComponent {
         }
       },
       error: (err) => {
-        console.error('Erreur de connexion:', err); // Log l'erreur
+        console.error('Erreur de connexion:', err);
 
         // Gestion des erreurs en fonction du type d'erreur
         if (err.status === 401) {
@@ -75,16 +68,16 @@ export class LoginComponent {
         this.router.navigate(['/medecin-interface-start']);
         break;
       case 'Patient':
-        this.router.navigate(['/dashboard-patient']);
+        this.router.navigate(['/patient']);
         break;
       case 'Radiologue':
-        this.router.navigate(['/dashboard-radiologue']);
+        this.router.navigate(['/radiologue']);
         break;
       case 'Infirmier':
-        this.router.navigate(['/dashboard-infirmier']);
+        this.router.navigate(['/infirmier']);
         break;
       case 'Laborantin':
-        this.router.navigate(['/dashboard-laborantin']);
+        this.router.navigate(['/laborantin']);
         break;
       default:
         this.router.navigate(['/']); // Redirection par défaut

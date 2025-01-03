@@ -16,17 +16,17 @@ import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'create-dpi', component: CreateDpiComponent },
-  { path: 'dossier-patient', component: DossierPatientComponent },
-  { path: 'medecin-interface-start', component: MedecinInterfaceStartComponent },
-  { path: 'ordonnance', component: OrdonnanceComponent },
-  { path: 'bilan', component: BilanComponent },
-  { path: 'laborantin', component: LaborantinComponent },
-  { path: 'soin', component: SoinComponent },
-  { path: 'examensup', component: ExamensupComponent },
-  { path: 'compterendu', component: CompterenduComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirection par défaut
-  { path: '**', redirectTo: 'login' }, // Redirection pour les chemins inconnus
+  { path: 'create-dpi', component: CreateDpiComponent, canActivate: [AuthGuard] },
+  { path: 'dossier-patient', component: DossierPatientComponent, canActivate: [AuthGuard] },
+  { path: 'medecin-interface-start', component: MedecinInterfaceStartComponent, canActivate: [AuthGuard] },
+  { path: 'ordonnance', component: OrdonnanceComponent, canActivate: [AuthGuard] },
+  { path: 'bilan', component: BilanComponent, canActivate: [AuthGuard] },
+  { path: 'laborantin', component: LaborantinComponent, canActivate: [AuthGuard] },
+  { path: 'soin', component: SoinComponent, canActivate: [AuthGuard] },
+  { path: 'examensup', component: ExamensupComponent, canActivate: [AuthGuard] },
+  { path: 'compterendu', component: CompterenduComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({

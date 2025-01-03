@@ -23,6 +23,12 @@ export class DossierPatientComponent {
 
   // Méthode pour naviguer vers la page de rédaction du bilan
   redigerBilan() {
+    this.router.navigate(['/examensup']);
+  }
+  redigerResumer() {
     this.router.navigate(['/bilan']);
+  }
+  redigerOrdannance() {
+    this.router.navigate(['/ordonnance']);
   }
 }

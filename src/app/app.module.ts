@@ -18,6 +18,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { BilanComponent } from './bilan/bilan.component';
+import { OrdonnanceComponent } from './ordonnance/ordonnance.component';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,7 @@ import { BilanComponent } from './bilan/bilan.component';
     CreateDpiComponent,
     DossierPatientComponent,
     MedecinInterfaceStartComponent,
-    BilanComponent
+    BilanComponent,OrdonnanceComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,7 @@ import { BilanComponent } from './bilan/bilan.component';
     }),
     RouterModule.forRoot(routes),
   ],
-  providers: [provideHttpClient(withFetch()) // Enregistrez l'intercepteur
+  providers: [provideHttpClient(withFetch()),AuthGuard // Enregistrez l'intercepteur
   ],
   bootstrap: [AppComponent],
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthService } from '../services/auth.service'; // Importez votre AuthService
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +10,11 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.authService.isLoggedIn()) {
-      return true; // L'utilisateur est connecté, autorisez l'accès
+      return true; // Autorisez l'accès
     } else {
-      this.router.navigate(['/login']); // Redirigez vers la page de connexion
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: this.router.url }, // Passez l'URL cible
+      });
       return false; // Bloquez l'accès
     }
   }

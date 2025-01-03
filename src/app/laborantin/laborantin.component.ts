@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Chart, registerables, ChartConfiguration } from 'chart.js';
+import { LaborantinService } from '../services/laborantinService.service';
 
 @Component({
   selector: 'app-laborantin',
@@ -16,7 +17,7 @@ export class LaborantinComponent implements OnInit {
   laborantinForm: FormGroup;
   chart!: Chart; // Typé explicitement pour Chart.js
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private laborantinService: LaborantinService) {
     Chart.register(...registerables); // Nécessaire pour utiliser Chart.js
     this.laborantinForm = this.fb.group({
       glycemie: [null, [Validators.required, Validators.min(0)]],
@@ -29,9 +30,20 @@ export class LaborantinComponent implements OnInit {
 
   onSubmit(): void {
     if (this.laborantinForm.valid) {
-      console.log('Bilan enregistré :', this.laborantinForm.value);
-      alert('Bilan enregistré avec succès !');
-      this.laborantinForm.reset(); // Réinitialiser après soumission
+      const bilanData = this.laborantinForm.value;
+
+      // Appel du service pour enregistrer le bilan
+      this.laborantinService.saveBilan(bilanData).subscribe(
+        (response) => {
+          console.log('Bilan enregistré avec succès :', response);
+          alert('Bilan enregistré avec succès !');
+          this.laborantinForm.reset(); // Réinitialiser après soumission
+        },
+        (error) => {
+          console.error('Erreur lors de l\'enregistrement du bilan :', error);
+          alert('Une erreur s\'est produite lors de l\'enregistrement du bilan.');
+        }
+      );
     } else {
       alert('Veuillez remplir tous les champs obligatoires.');
     }
@@ -99,5 +111,3 @@ export class LaborantinComponent implements OnInit {
     }
   }
 }
-
-

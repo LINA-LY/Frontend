@@ -49,7 +49,7 @@
             <ul class="list">
               <li *ngFor="let ordonnance of dossierData.ordonnances">{{ ordonnance }}</li>
             </ul>
-            <button class="primary-btn">Rédiger Ordonnance</button>
+            <button class="primary-btn" (click)="redigerOrdannance()" >Rédiger Ordonnance</button>
           </div>
           <!-- Liste de bilans -->
           <div>
@@ -71,7 +71,7 @@
             <button class="secondary-btn">Voir résumé</button>
           </li>
         </ul>
-        <button class="primary-btn">Rédiger résumé</button>
+        <button class="primary-btn" (click)="redigerResumer()">Rédiger résumé</button>
       </div>
     </div>
 
