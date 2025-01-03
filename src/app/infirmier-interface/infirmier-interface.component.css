@@ -1,0 +1,115 @@
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #003366;
+    padding: 15px 30px;
+}
+
+.navbar .logo img {
+    width: 60px; /* Increased size for better visibility */
+}
+
+.navbar .title h1 {
+    color: white;
+    text-align: center;
+    font-size: 1.8rem; /* Adjusted for optimal readability */
+    margin: 0;
+    flex-grow: 1;
+}
+
+.navbar .logout .dec {
+    color: white;
+    background-color: #E57373;
+    border: none;
+    padding: 15px 25px; /* Increased size for better balance */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem; /* Improved text size for visibility */
+}
+
+.navbar .logout .dec:hover {
+    background-color: #ee9595;
+}
+
+/* Container principal */
+.container {
+    background-color: #FFFFFF; /* Set the base color of the table to white */
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
+}
+
+/* Tableau des patients */
+.patient-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #FFFFFF;
+}
+
+.patient-list th, .patient-list td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.patient-list th {
+    background-color: #003366;
+    color: white;
+}
+
+.patient-list tr:hover {
+    background-color: #EEE3FF; /* Highlight color on hover */
+}
+
+.patient-list button {
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem; /* Standardized button text size */
+}
+
+/* Style pour le bouton "Non" (rouge) */
+.btn-no {
+    background-color: #E57373;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-no:hover {
+    background-color: #ee9595;
+}
+
+/* Style pour le bouton "Oui" (vert) */
+.btn-yes {
+    background-color: #56C271;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-yes:hover {
+    background-color: #6fd288;
+}
+
+/* Style pour le bouton "Effacer" (gris) */
+.btn-effacer {
+    background-color: #B0BEC5;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-effacer:hover {
+    background-color: #90A4AE;
+}
