@@ -1,0 +1,120 @@
+.page-title {
+  text-align: center;
+  font-size: 24px;
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.page-subtitle {
+  text-align: center;
+  font-size: 16px;
+  color: #003366;
+  margin-bottom: 20px;
+}
+
+.form-card {
+  position: relative; /* Positionnement relatif pour les boutons */
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  width: 90%; /* Occupe 90% de la largeur de la page */
+  margin: 0 auto; /* Centrage horizontal */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block; /* Placer le label au-dessus de l’input */
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #003366; /* Couleur souhaitée pour les étiquettes */ 
+}
+
+input {
+  width: 100%; /* La largeur du champ remplit l’espace disponible */
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ced4da; /* Une bordure grise */
+  border-radius: 5px; /* Coins légèrement arrondis */
+}
+
+input::placeholder {
+  font-style: italic; /* Apparence du texte de l'exemple */
+  color: #6c757d;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer; /* Indique que c'est cliquable */
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  opacity: 0.9; /* Effet visuel lorsqu'on survole */
+}
+
+.add-medicament-btn {
+  background-color: #007bff; /* Bleu */
+  color: #fff;
+  margin-top: 15px;
+}
+
+.save-btn {
+  background-color: #28a745; /* Vert */
+  color: #fff;
+  width: auto;
+}
+
+.cancel-btn {
+  background-color: #dc3545; /* Rouge */
+  color: #fff;
+  width: auto;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end; /* Aligner les boutons à droite */
+  gap: 10px;
+  margin-top: 20px; /* Espacement avec le formulaire */
+}
+  
+
+.medicaments-list {
+  margin-top: 30px;
+}
+
+.list-title {
+  text-align: center;
+  font-size: 20px;
+  color: #003366;
+  margin-bottom: 15px;
+}
+
+.medicaments-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.medicaments-table th,
+.medicaments-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.medicaments-table th {
+  background-color: #f4f4f4;
+  color: #003366;
+}
+
+.medicaments-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

@@ -1,0 +1,31 @@
+.header {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 20px; 
+  background-color: #333; 
+  color: white; 
+}
+
+
+  button{
+    color: white; 
+    font-size: 16px;
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px;
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    background-color: #E57373;
+  }
+  
+  button:hover {
+    background-color: #ee9595;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+  }
+  
+  
+  button:active {
+    background-color: #ee9595;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+  }

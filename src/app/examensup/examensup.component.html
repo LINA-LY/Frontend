@@ -1,0 +1,42 @@
+<div class="examansup-container">
+    <h1 class="page-title">Prescrire des bilans supplémentaires </h1>
+  </div>
+  <p class="page-subtitle">
+    Ajouter les détails des examens demandés pour compléter le diagnostic
+  </p>
+  <div class="form-card">
+    <form>
+      <!-- Champ : Bilan biologique -->
+      <div class="form-group">
+        <label for="Bilan biologique">Bilan biologique </label>
+        <input
+          type="text"
+          id="bilan_biologique"
+          name="bilan_biologique"
+          [(ngModel)]="description"
+          placeholder="Ex : Numération formule sanguine, Glycémie ..."
+        />
+      </div>
+      <!-- Champ : Bilan radiologique -->
+      <!-- <div class="form-group">
+        <label for="Bilan radilogique">Bilan radiologique</label>
+        <input
+          type="text"
+          id="bilan_radilogique"
+          name="bilan_radilogique"
+          placeholder="Ex : Radiographie, IRM, Scanner..."
+        />
+      </div> -->
+  
+      <!-- Boutons Enregistrer et Annuler -->
+      <div class="actions">
+        <button type="submit" class="btn save-btn" (click)="enregistrer()">
+          Enregistrer 
+        </button>
+        <button type="button" class="btn cancel-btn" (click)="annuler()">
+          Annuler
+        </button>
+      </div>
+    </form> <!-- Attention à la fermeture du form ici -->
+  </div>
+  

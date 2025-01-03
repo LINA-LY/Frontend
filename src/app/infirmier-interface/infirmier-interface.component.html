@@ -1,0 +1,41 @@
+<div class="navbar">
+    <div class="logo">
+      <img src="assets/logo.svg" alt="logo">
+    </div>
+    <div class="title">
+      <h1>Liste des patients</h1>
+    </div>
+    <div class="logout">
+      <button class="dec">Déconnexion</button>
+    </div>
+</div>
+
+<div class="container">
+  <div class="patient-list">
+      <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>NSS</th>
+              <th>Statut</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let patient of patients">
+              <td>{{ patient.name }}</td> <!-- Changer "nom" par "name" -->
+              <td>{{ patient.nss }}</td>
+              <td>
+                <!-- Afficher le bouton "Non" ou "Oui" en fonction de l'état -->
+                <button *ngIf="patient.statut === 'non'" class="btn-no" (click)="toggleStatut(patient)">Non</button>
+                <button *ngIf="patient.statut === 'oui'" class="btn-yes" (click)="toggleStatut(patient)">Oui</button>
+              </td>
+              <td>
+                <!-- Le bouton "Effacer" apparaît uniquement lorsque le statut est "Oui" -->
+                <button *ngIf="patient.statut === 'oui'" class="btn-effacer" (click)="effacer(patient)">Effacer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>

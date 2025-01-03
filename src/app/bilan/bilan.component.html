@@ -1,0 +1,88 @@
+<div class="bilan-container">
+  <h1 class="page-title">Rédiger Résumé</h1>
+  <p class="page-subtitle">
+    Ajoutez un résumé comprenant les antécédents du patient et les
+    détails de la consultation.
+  </p>
+  <div class="form-card">
+    <form>
+      <!-- Champ : Date -->
+      <div class="form-group">
+        <label for="date">Date *</label>
+        <input
+          type="date"
+          id="date"
+          name="date"
+          [(ngModel)]="bilan.date"
+        />
+      </div>
+
+      <!-- Champ : DPI (Numéro de Sécurité Sociale) -->
+      <div class="form-group">
+        <label for="dpi">Numéro de Sécurité Sociale (DPI) *</label>
+        <input
+          type="text"
+          id="dpi"
+          name="dpi"
+          placeholder="Ex : 1234567890123"
+          [(ngModel)]="bilan.nss"
+        />
+      </div>
+
+      <!-- Champ : Médecin -->
+      <div class="form-group">
+        <label for="medecin">Médecin *</label>
+        <input
+          type="text"
+          id="medecin"
+          name="medecin"
+          placeholder="Ex : Dr. Dupont"
+          [(ngModel)]="bilan.medecin"
+        />
+      </div>
+
+      <!-- Champ : Antécédents médicaux -->
+      <div class="form-group">
+        <label for="antecedents">Antécédents médicaux *</label>
+        <textarea
+          id="antecedents"
+          name="antecedents"
+          placeholder="Ex : Allergies, Maladies chroniques..."
+          [(ngModel)]="bilan.antecedents"
+        ></textarea>
+      </div>
+
+      <!-- Champ : Observations -->
+      <div class="form-group">
+        <label for="observations">Observations *</label>
+        <textarea
+          id="observations"
+          name="observations"
+          placeholder="Entrez vos observations cliniques..."
+          [(ngModel)]="bilan.observations"
+        ></textarea>
+      </div>
+
+      <!-- Champ : Diagnostic -->
+      <div class="form-group">
+        <label for="diagnostic">Diagnostic *</label>
+        <textarea
+          id="diagnostic"
+          name="diagnostic"
+          placeholder="Entrez le diagnostic"
+          [(ngModel)]="bilan.diagnostic"
+        ></textarea>
+      </div>
+    </form>
+
+    <!-- Boutons Enregistrer et Annuler -->
+    <div class="actions">
+      <button type="button" class="btn save-btn" (click)="enregistrerBilan()">
+        Enregistrer le Résumé
+      </button>
+      <button type="button" class="btn cancel-btn" (click)="annuler()">
+        Annuler
+      </button>
+    </div>
+  </div>
+</div>

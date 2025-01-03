@@ -1,0 +1,195 @@
+/* General Styles */
+body,  h1, h2, h3, h4, h5, h6, p, li {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f6fa;
+  color: #003366; /* Couleur du texte modifiée */
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #003366; /* Changement de la couleur du background du header */
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+}
+
+.header .logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.header .navbar {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.header .nav-link {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header .logout-btn {
+  background-color: #E57373; /* Changement de couleur pour le bouton déconnexion */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.header .logout-btn:hover {
+  background-color: #C0392B;
+}
+
+/* Search Section */
+.search-section {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-right: 10px;
+}
+
+/* Search Section */
+.qr-btn {
+  background-color: #6FB1FC; /* Nouvelle couleur */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.qr-btn:hover {
+  background-color: #4a8bc2; /* Nouvelle couleur au survol */
+}
+
+/* Main Content */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #003366; /* Changement de la couleur du texte */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  background-color:rgb(249, 249, 249);
+}
+
+.card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card.full-width {
+  grid-column: span 2;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.horizontal-grid {
+  display: flex;
+  gap: 20px;
+}
+
+.medical-history li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Buttons */
+.primary-btn,
+.secondary-btn,
+.trend-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.primary-btn {
+  background-color: #6FB1FC; /* Changement de couleur du bouton primaire */
+  color: white;
+}
+
+.primary-btn:hover {
+  background-color: #004a99;
+}
+
+.secondary-btn {
+  background-color: #eaf2fc;
+  color: #0062cc;
+}
+
+.secondary-btn:hover {
+  background-color: #d6e8fa;
+}
+
+/* Footer Section */
+.trend-btn {
+  background-color: #6FB1FC; /* Nouvelle couleur */
+  color: white;
+  float: right;
+  margin-top: 20px;
+  padding: 12px 20px; /* Ajout d'un padding si nécessaire */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.trend-btn:hover {
+  background-color: #4a8bc2; /* Nouvelle couleur au survol */
+}
+
