@@ -13,7 +13,14 @@ export const routes: Routes = [
   { path: 'dossier-patient', component: DossierPatientComponent }, 
   { path: 'medecin-interface-start', component: MedecinInterfaceStartComponent }, 
   { path: '', redirectTo: 'login', pathMatch: 'full' }, 
-  { path: '**', redirectTo: 'login' } 
+  { path: '**', redirectTo: 'login' },
+  { path: '', redirectTo: '/ordonnance', pathMatch: 'full' },
+  { path: 'ordonnance', component: OrdonnanceComponent },
+  { path: 'bilan', component: BilanComponent },
+  { path: 'laborantin', component: LaborantinComponent },
+  { path: 'soin', component: SoinComponent },
+  { path: 'examensup', component: ExamensupComponent },
+  { path: 'compterendu', component: CompterenduComponent },
   
 ];
 
