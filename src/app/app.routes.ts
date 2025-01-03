@@ -13,6 +13,8 @@ import { SoinComponent } from './soin/soin.component';
 import { ExamensupComponent } from './examensup/examensup.component';
 import { CompterenduComponent } from './compterendu/compterendu.component';
 import { AuthGuard } from './guards/auth.guard';
+import { InfirmierInterfaceComponent } from './infirmier-interface/infirmier-interface.component';
+import { PatientInterfaceComponent } from './patient-interface/patient-interface.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,6 +27,8 @@ export const routes: Routes = [
   { path: 'soin', component: SoinComponent, canActivate: [AuthGuard] },
   { path: 'examensup', component: ExamensupComponent, canActivate: [AuthGuard] },
   { path: 'compterendu', component: CompterenduComponent, canActivate: [AuthGuard] },
+  { path: 'infermier', component: InfirmierInterfaceComponent, canActivate: [AuthGuard] },
+  { path: 'patient-interface', component: PatientInterfaceComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' },
 ];

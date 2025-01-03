@@ -1,6 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap, throwError, Observable } from 'rxjs';
+import { catchError, tap, throwError, Observable, BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
@@ -8,7 +8,8 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class AuthService {
   private apiUrl = 'http://127.0.0.1:8000/api/login/';
-
+  private nssSubject = new BehaviorSubject<string | null>(null); // Define nssSubject
+  public nss$ = this.nssSubject.asObservable()
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -27,7 +28,13 @@ export class AuthService {
       catchError(this.handleError)
     );
   }
+  setNss(nss: string) {
+    this.nssSubject.next(nss);
+  }
 
+  getNss(): string | null {
+    return this.nssSubject.value;
+  }
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Une erreur est survenue, réessayez plus tard.';
     if (error.error instanceof ErrorEvent) {
@@ -58,6 +65,7 @@ export class AuthService {
       localStorage.removeItem('authToken');
       localStorage.removeItem('userData');
       localStorage.removeItem('role');
+      // this.nssSubject.next(null);
     }
   }
 

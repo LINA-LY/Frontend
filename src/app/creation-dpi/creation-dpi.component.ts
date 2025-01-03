@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DpiService } from '../services/dpi.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-create-dpi',
@@ -32,6 +33,7 @@ export class CreateDpiComponent {
   constructor(
     private dpiService: DpiService, // Service pour créer un DPI
     private router: Router, // Service de navigation
+    private authService: AuthService,
   ) {}
 
   // Méthode appelée lors de la soumission du formulaire
@@ -83,4 +85,9 @@ export class CreateDpiComponent {
   onCancel(): void {
     this.router.navigate(['/medecin-interface-start']);
   }
+  onLogout(): void {
+    this.authService.logout(); // Déconnectez l'utilisateur
+    this.router.navigate(['/login']); // Redirigez vers la page de connexion
+  }
+
 }

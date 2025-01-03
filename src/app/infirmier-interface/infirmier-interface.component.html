@@ -1,41 +1,46 @@
-<div class="navbar">
-    <div class="logo">
-      <img src="assets/logo.svg" alt="logo">
-    </div>
-    <div class="title">
-      <h1>Liste des patients</h1>
-    </div>
-    <div class="logout">
-      <button class="dec">Déconnexion</button>
-    </div>
-</div>
+<!-- <div class="navbar">
+  <div class="logo">
+    <img src="assets/logo.svg" alt="logo">
+  </div>
+  <div class="title">
+    <h1>Liste des patients</h1>
+  </div>
+  <div class="logout">
+    <button class="dec">Déconnexion</button>
+  </div>
+</div> -->
 
 <div class="container">
-  <div class="patient-list">
-      <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>NSS</th>
-              <th>Statut</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let patient of patients">
-              <td>{{ patient.name }}</td> <!-- Changer "nom" par "name" -->
-              <td>{{ patient.nss }}</td>
-              <td>
-                <!-- Afficher le bouton "Non" ou "Oui" en fonction de l'état -->
-                <button *ngIf="patient.statut === 'non'" class="btn-no" (click)="toggleStatut(patient)">Non</button>
-                <button *ngIf="patient.statut === 'oui'" class="btn-yes" (click)="toggleStatut(patient)">Oui</button>
-              </td>
-              <td>
-                <!-- Le bouton "Effacer" apparaît uniquement lorsque le statut est "Oui" -->
-                <button *ngIf="patient.statut === 'oui'" class="btn-effacer" (click)="effacer(patient)">Effacer</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  <div class="header">
+    <img src="assets/logo.svg" alt="Logo" class="logo" />
+    <div class="nav-links">
+      <button class="nav-link selected">Consulter DPI</button>
+     
+    </div>
+    <button class="btn-deconnexion" (click)="onLogout()">Déconnexion</button>
   </div>
+<div class="patient-list">
+    <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>NSS</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of patients">
+            <td>{{ item.patient.nom }}</td>
+            <td>{{ item.patient.prenom }}</td>
+            <td>{{ item.patient.nss }}</td>
+            <td>
+              <button *ngIf="!item.patient.statut || item.patient.statut === 'non'" class="btn-no" (click)="toggleStatut(item)">Non</button>
+              <button *ngIf="item.patient.statut === 'oui'" class="btn-yes" (click)="toggleStatut(item)">Oui</button>
+            </td>
+            <!-- La colonne "Action" a été supprimée -->
+          </tr>
+        </tbody>
+      </table>
+</div>
 </div>

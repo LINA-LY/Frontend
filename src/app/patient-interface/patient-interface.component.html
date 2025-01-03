@@ -1,0 +1,75 @@
+<div class="container">
+  <header class="header">
+    <div class="logo">
+      <img src="assets/logo.svg" alt="DPI Logo" />
+      <h1>DPI</h1>
+    </div>
+    
+    <button class="logout-btn"  (click)="onLogout()">Déconnexion</button>
+  </header>
+
+  
+
+  <main class="content">
+    <!-- Affichez les informations du patient -->
+    <h2 class="title">Dossier du patient - <span>{{ dossierData.dossier.patient.nom }} {{ dossierData.dossier.patient.prenom }}</span></h2>
+
+    <div class="grid">
+      <!-- Informations administratives -->
+      <div class="card">
+        <h3>Informations administratives</h3>
+        <ul class="info-list">
+          <li><strong>Nom :</strong> {{ dossierData.dossier.patient.nom }}</li>
+          <li><strong>Prénom :</strong> {{ dossierData.dossier.patient.prenom }}</li>
+          <li><strong>N° Sécurité Sociale :</strong> {{ dossierData.dossier.patient.nss }}</li>
+          <li><strong>Date de naissance :</strong> {{ dossierData.dossier.patient.date_naissance }}</li>
+          <li><strong>Adresse :</strong> {{ dossierData.dossier.patient.adresse }}</li>
+          <li><strong>Téléphone :</strong> {{ dossierData.dossier.patient.telephone }}</li>
+          <li><strong>Mutuelle :</strong> {{ dossierData.dossier.patient.mutuelle }}</li>
+          <li><strong>Médecin traitant :</strong> {{ dossierData.dossier.patient.medecin_traitant.nom }} {{ dossierData.dossier.patient.medecin_traitant.prenom }}</li>
+          <li><strong>Personne à Contacter :</strong> {{ dossierData.dossier.patient.personne }}</li>
+        </ul>
+      </div>
+
+      <!-- Ordonnances et Bilans -->
+      <div class="card">
+        <h3>Ordonnances et Bilans</h3>
+        <div class="horizontal-grid">
+          <!-- Liste d'ordonnances -->
+          <div>
+            <h4>Ordonnances</h4>
+            <ul class="list">
+              <li *ngFor="let ordonnance of dossierData.ordonnances">{{ ordonnance }}</li>
+            </ul>
+          </div>
+          <!-- Liste de bilans -->
+          <div>
+            <h4>Bilans</h4>
+            <ul class="list">
+              <li *ngFor="let bilan of dossierData.bilans">{{ bilan }}</li>
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- Antécédents Médicaux -->
+      <div class="card full-width">
+        <h3>Antécédents Médicaux</h3>
+        <ul class="medical-history">
+          <li *ngFor="let resume of dossierData.resumes">
+            {{ resume }}
+            <button class="secondary-btn">Voir résumé</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+      <button class="trend-btn">
+        Voir Radiographies et Graphiques de Tendance
+      </button>
+    </div>
+  </main>
+</div>
