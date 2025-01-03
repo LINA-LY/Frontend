@@ -3,19 +3,20 @@
     <img src="assets/logo.svg" alt="Logo" class="logo" />
     <div class="nav-links">
       <button class="nav-link selected">Consulter DPI</button>
-      <button class="nav-link">Créer DPI</button>
+      <button class="nav-link" (click)="navigateToCreationDpi()">Créer DPI</button>
     </div>
-    <button class="btn-deconnexion">Déconnexion</button>
+    <button class="btn-deconnexion" (click)="onLogout()">Déconnexion</button>
   </div>
   <div class="search-section">
     <div class="search-bar">
       <img src="assets/loupe.png" alt="loupe" class="search-icon" />
-      <input class="NSS" type="text" placeholder="Rechercher par NSS ..." />
-      <button>
+      <input class="NSS" type="text" placeholder="Rechercher par NSS ..." #nssInput 
+      (keyup.enter)="onSearch(nssInput.value)" />
+      <button (click)="onSearch(nssInput.value)">
         <i class="fas fa-search"></i>
       </button>
     </div>
-    <button class="btn-scan">
+    <button class="btn-scan" (click)="startScan()">
       Scanner QR code <img src="assets/QR.png" alt="QR Code" class="scan-icon" />
     </button>
   </div>
@@ -29,4 +30,5 @@
       <img src="assets/acc.png" alt="Illustration" />
     </div>
   </div>
+  <canvas id="qr-canvas" hidden></canvas>
 </div>

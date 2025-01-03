@@ -9,11 +9,12 @@ import { MedecinInterfaceStartComponent } from './medecin-interface-start/medeci
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'creation-dpi', component: CreateDpiComponent },
+  { path: 'create-dpi', component: CreateDpiComponent },
   { path: 'dossier-patient', component: DossierPatientComponent }, 
   { path: 'medecin-interface-start', component: MedecinInterfaceStartComponent }, 
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirection vers login par défaut
-  { path: '**', redirectTo: 'login' } // Redirection vers login pour les routes inconnues
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, 
+  { path: '**', redirectTo: 'login' } 
+  
 ];
 
 @NgModule({

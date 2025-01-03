@@ -1,35 +1,47 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserModule } from '@angular/platform-browser';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importez BrowserAnimationsModule
+import { ToastrModule } from 'ngx-toastr'; // Importez ToastrModule
+
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from './services/auth.service';
-import { FormsModule } from '@angular/forms'; 
-import {CreateDpiComponent} from './creation-dpi/creation-dpi.component'
-// Importation des composants
+import { CreateDpiComponent } from './creation-dpi/creation-dpi.component';
 import { LoginComponent } from './login/login.component';
-import { DossierPatientComponent } from './dossier-patient/dossier-patient.component'; 
-import { MedecinInterfaceStartComponent } from './medecin-interface-start/medecin-interface-start.component'; // Exemple
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
+import { DossierPatientComponent } from './dossier-patient/dossier-patient.component';
+import { MedecinInterfaceStartComponent } from './medecin-interface-start/medecin-interface-start.component';
+import { authInterceptor } from './auth.interceptor';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { routes } from './app.routes';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     CreateDpiComponent,
-    DossierPatientComponent, // Ajoute ici ton composant
-    MedecinInterfaceStartComponent, // Ajoute ici ton composant
+    DossierPatientComponent,
+    MedecinInterfaceStartComponent,
   ],
-
   imports: [
     BrowserModule,
     SharedModule,
+    CommonModule,
     FormsModule,
-    BrowserAnimationsModule, 
-    ToastrModule.forRoot(),
+    BrowserAnimationsModule, // Ajoutez BrowserAnimationsModule
+    ToastrModule.forRoot({ // Configurez ToastrModule
+      timeOut: 3000, // Durée d'affichage des notifications (en ms)
+      positionClass: 'toast-top-right', // Position des notifications
+      preventDuplicates: true, // Empêche les notifications en double
+    }),
+    RouterModule.forRoot(routes),
   ],
- 
-  providers: [AuthService],
-  bootstrap: [AppComponent]
+  providers: [provideHttpClient(withFetch()) // Enregistrez l'intercepteur
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

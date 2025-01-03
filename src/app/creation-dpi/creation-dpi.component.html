@@ -13,10 +13,11 @@
     <p class="intro-text">Veuillez renseigner les informations suivantes pour enregistrer un nouveau dossier.</p>
 
     <form (ngSubmit)="onSubmit()">
+      <!-- Informations d'identité -->
       <div class="info-id">
         <h3>Informations d'identité</h3>
-        <label for="numSecu">Numéro de Sécurité Sociale <span class="red">*</span></label>
-        <input type="text" id="numSecu" class="in" [(ngModel)]="dpiData.numSecu" name="numSecu" required />
+        <label for="nss">Numéro de Sécurité Sociale <span class="red">*</span></label>
+        <input type="text" id="nss" class="in" [(ngModel)]="dpiData.nss" name="nss" required />
 
         <label for="nom">Nom <span class="red">*</span></label>
         <input type="text" id="nom" class="in" [(ngModel)]="dpiData.nom" name="nom" required />
@@ -24,10 +25,11 @@
         <label for="prenom">Prénom <span class="red">*</span></label>
         <input type="text" id="prenom" class="in" [(ngModel)]="dpiData.prenom" name="prenom" required />
 
-        <label for="dateNaissance">Date de naissance <span class="red">*</span></label>
-        <input type="date" id="dateNaissance" class="in" [(ngModel)]="dpiData.dateNaissance" name="dateNaissance" required />
+        <label for="date_naissance">Date de naissance <span class="red">*</span></label>
+        <input type="date" id="date_naissance" class="in" [(ngModel)]="dpiData.date_naissance" name="date_naissance" required />
       </div>
 
+      <!-- Coordonnées -->
       <div class="info-id">
         <h3>Coordonnées</h3>
         <label for="adresse">Adresse <span class="red">*</span></label>
@@ -38,17 +40,22 @@
 
         <label for="mutuelle">Mutuelle <span class="red">*</span></label>
         <input type="text" id="mutuelle" class="in" [(ngModel)]="dpiData.mutuelle" name="mutuelle" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" class="in" [(ngModel)]="dpiData.email" name="email" />
       </div>
 
+      <!-- Informations médicales -->
       <div class="info-id">
         <h3>Informations médicales</h3>
-        <label for="medecin">Médecin traitant <span class="red">*</span></label>
-        <input type="text" id="medecin" class="in" [(ngModel)]="dpiData.medecin" name="medecin" required />
+        <label for="medecin_traitant">Médecin traitant <span class="red">*</span></label>
+        <input type="text" id="medecin_traitant" class="in" [(ngModel)]="dpiData.medecin_traitant" name="medecin_traitant" required />
 
-        <label for="urgence">Personne à contacter en cas d’urgence <span class="red">*</span></label>
-        <input type="text" id="urgence" class="in" [(ngModel)]="dpiData.urgence" name="urgence" required />
+        <label for="personne">Personne à contacter en cas d’urgence <span class="red">*</span></label>
+        <input type="text" id="personne" class="in" [(ngModel)]="dpiData.personne" name="personne" required />
       </div>
 
+      <!-- Boutons -->
       <div class="button-container">
         <button type="submit" class="creer">Créer le DPI</button>
         <button type="button" class="Annuler" (click)="onCancel()">Annuler</button>

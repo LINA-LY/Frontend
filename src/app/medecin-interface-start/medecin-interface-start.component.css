@@ -188,7 +188,25 @@ html, body {
   margin-right: auto;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-
+.camera-preview {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin-top: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+#qr-canvas {
+  width: 100%;
+  position: absolute;
+  max-width: 400px;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  /* margin-top: 20px; */
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
 @media screen and (max-width: 600px) {
   .NSS {
     width: 100%;

@@ -19,21 +19,23 @@
   </div>
 
   <main class="content">
-    <h2 class="title">Dossier du patient - <span>Jean Dupont</span></h2>
+    <!-- Affichez les informations du patient -->
+    <h2 class="title">Dossier du patient - <span>{{ dossierData.dossier.patient.nom }} {{ dossierData.dossier.patient.prenom }}</span></h2>
 
     <div class="grid">
       <!-- Informations administratives -->
       <div class="card">
         <h3>Informations administratives</h3>
         <ul class="info-list">
-          <li><strong>Nom :</strong> Jean Dupont</li>
-          <li><strong>N° Sécurité Sociale :</strong> 123-45-6789</li>
-          <li><strong>Date de naissance :</strong> 01/01/1980</li>
-          <li><strong>Adresse :</strong> 123 Rue de Paris, 75000</li>
-          <li><strong>Téléphone :</strong> 01 23 45 67 89</li>
-          <li><strong>Mutuelle :</strong> Mutuelle Santé Plus</li>
-          <li><strong>Médecin traitant :</strong> Dr Marie Lemoine</li>
-          <li><strong>Personne à Contacter :</strong> Pierre Dupont (Frère) - 01 23 45 67 90</li>
+          <li><strong>Nom :</strong> {{ dossierData.dossier.patient.nom }}</li>
+          <li><strong>Prénom :</strong> {{ dossierData.dossier.patient.prenom }}</li>
+          <li><strong>N° Sécurité Sociale :</strong> {{ dossierData.dossier.patient.nss }}</li>
+          <li><strong>Date de naissance :</strong> {{ dossierData.dossier.patient.date_naissance }}</li>
+          <li><strong>Adresse :</strong> {{ dossierData.dossier.patient.adresse }}</li>
+          <li><strong>Téléphone :</strong> {{ dossierData.dossier.patient.telephone }}</li>
+          <li><strong>Mutuelle :</strong> {{ dossierData.dossier.patient.mutuelle }}</li>
+          <li><strong>Médecin traitant :</strong> {{ dossierData.dossier.patient.medecin_traitant.nom }} {{ dossierData.dossier.patient.medecin_traitant.prenom }}</li>
+          <li><strong>Personne à Contacter :</strong> {{ dossierData.dossier.patient.personne }}</li>
         </ul>
       </div>
 
@@ -45,9 +47,7 @@
           <div>
             <h4>Ordonnances</h4>
             <ul class="list">
-              <li>Ordonnance1</li>
-              <li>Ordonnance2</li>
-              <li>Ordonnance3</li>
+              <li *ngFor="let ordonnance of dossierData.ordonnances">{{ ordonnance }}</li>
             </ul>
             <button class="primary-btn">Rédiger Ordonnance</button>
           </div>
@@ -55,9 +55,7 @@
           <div>
             <h4>Bilans</h4>
             <ul class="list">
-              <li>Bilan1</li>
-              <li>Bilan2</li>
-              <li>Bilan3</li>
+              <li *ngFor="let bilan of dossierData.bilans">{{ bilan }}</li>
             </ul>
             <button class="primary-btn">Rédiger Bilan</button>
           </div>
@@ -68,16 +66,8 @@
       <div class="card full-width">
         <h3>Antécédents Médicaux</h3>
         <ul class="medical-history">
-          <li>
-            Chirurgie de l’appendicite
-            <button class="secondary-btn">Voir résumé</button>
-          </li>
-          <li>
-            Allergie aux pénicillines
-            <button class="secondary-btn">Voir résumé</button>
-          </li>
-          <li>
-            Hypertension artérielle
+          <li *ngFor="let resume of dossierData.resumes">
+            {{ resume }}
             <button class="secondary-btn">Voir résumé</button>
           </li>
         </ul>

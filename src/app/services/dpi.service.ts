@@ -1,23 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-
+import { AuthService } from './auth.service'; // Importez AuthService
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DpiService {
+  private apiUrl = 'http://127.0.0.1:8000/dossier_patient/api/dossier-medical/'; // URL de votre API Django
 
-  private apiUrl = `${environment.apiBaseUrl}/create-dpi`;  // Modifie avec l'URL appropriée
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  constructor(private http: HttpClient) {}
+  // Méthode pour créer un DPI
+  createDpi(dpiData: any): Observable<any> {
+  
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+    });
 
-  // Fonction pour créer un DPI
-  createDpi(data: any): Observable<any> {
-    const token = localStorage.getItem('auth_token'); // Récupère le token depuis le localStorage
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.apiUrl}`, dpiData, { headers });
+  }
 
-    return this.http.post(this.apiUrl, data, { headers });
+  // Méthode pour rechercher un DPI par NSS
+  searchDpi(nss: string): Observable<any> {
+   
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+    });
+
+    return this.http.get(`${this.apiUrl}${nss}/lister_dossier_complet/`, { headers });
   }
 }

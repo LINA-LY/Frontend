@@ -1,51 +1,86 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DpiService } from '../services/dpi.service'; // Assure-toi que le service est importé
-import { ToastrService } from 'ngx-toastr';  // Optionnel, pour afficher des messages de succès ou erreur
+import { DpiService } from '../services/dpi.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-create-dpi',
-  templateUrl: './create-dpi.component.html',
-  styleUrls: ['./creation-dpi.component.css']
+  standalone: true, // Utilisation de composants autonomes (Angular 14+)
+  imports: [CommonModule, FormsModule], // Importation des modules nécessaires
+  templateUrl: './creation-dpi.component.html', // Lien vers le template HTML
+  styleUrls: ['./creation-dpi.component.css'], // Lien vers les styles CSS
 })
 export class CreateDpiComponent {
-  
+  submitted = false; // Indicateur de soumission du formulaire
+
+  // Objet pour stocker les données du formulaire
   dpiData = {
-    numSecu: '',
+    nss: '',
     nom: '',
     prenom: '',
-    dateNaissance: '',
+    date_naissance: '',
     adresse: '',
     telephone: '',
     mutuelle: '',
-    medecin: '',
-    urgence: ''
+    email: '',
+    medecin_traitant: '',
+    personne: '',
   };
 
-  constructor(private dpiService: DpiService, private router: Router, private toastr: ToastrService) {}
+  // Injection des services nécessaires
+  constructor(
+    private dpiService: DpiService, // Service pour créer un DPI
+    private router: Router, // Service de navigation
+  ) {}
 
-  // Fonction pour soumettre le formulaire
+  // Méthode appelée lors de la soumission du formulaire
   onSubmit(): void {
+    this.submitted = true;
+
+    // Validation des champs obligatoires
+    if (
+      !this.dpiData.nss ||
+      !this.dpiData.nom ||
+      !this.dpiData.prenom ||
+      !this.dpiData.date_naissance ||
+      !this.dpiData.adresse ||
+      !this.dpiData.telephone ||
+      !this.dpiData.mutuelle ||
+      !this.dpiData.medecin_traitant ||
+      !this.dpiData.personne
+    ) {
+      alert('Veuillez remplir tous les champs obligatoires.'); // Affiche une alerte si des champs sont manquants
+      return;
+    }
+
+    // Appel au service pour créer le DPI
     this.dpiService.createDpi(this.dpiData).subscribe({
       next: (response) => {
-        // Vérifie si le NSS est dans la réponse
-        const nss = response.patient?.nss;
+        const nss = response.patient?.nss; // Récupère le NSS de la réponse
         if (nss) {
-          this.router.navigate(['/dossier-patient', 'search-dpi'], { queryParams: { nss } });
-          this.toastr.success('DPI créé avec succès !');
+          // Redirige vers la page de recherche DPI avec le NSS en paramètre
+          this.router.navigate(['/dossier-patient', 'search-dpi'], );
+          alert('DPI créé avec succès !'); // Affiche un message de succès
         } else {
-          this.toastr.error('Erreur lors de la création du DPI, NSS manquant.');
+          alert('Erreur lors de la création du DPI, NSS manquant.'); // Affiche une erreur si le NSS est manquant
         }
       },
       error: (err) => {
-        console.error(err);
-        this.toastr.error('Erreur lors de la création du DPI.');
-      }
+        console.error(err); // Log l'erreur dans la console
+        if (err.status === 401) {
+          alert('Vous n\'êtes pas autorisé à effectuer cette action.'); // Affiche une erreur d'autorisation
+        } else if (err.status === 400) {
+          alert('Données invalides. Veuillez vérifier les informations saisies.'); // Affiche une erreur de validation
+        } else {
+          alert('Une erreur est survenue. Veuillez réessayer plus tard.'); // Affiche une erreur générique
+        }
+      },
     });
   }
 
-  // Fonction pour annuler la création du DPI et rediriger
+  // Méthode pour annuler et revenir à la page précédente
   onCancel(): void {
-    this.router.navigate(['/dossier-patient']);
+    this.router.navigate(['/medecin-interface-start']);
   }
 }

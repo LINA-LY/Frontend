@@ -9,14 +9,28 @@
     </div>
     <h2 class="Bien">Bienvenue !</h2>
     <h3 class="Connexion">Connexion</h3>
-    <form (ngSubmit)="onSubmit()">
-      <input class="email" type="email" placeholder="E-mail" [value]="email" (input)="onEmailChange($event)" name="email" required />
-      <input class="password" type="password" placeholder="Mot de passe" [value]="password" (input)="onPasswordChange($event)" name="password" required />
+    <form (ngSubmit)="onSubmit($event)">
+      <input
+        class="email"
+        type="email"
+        placeholder="E-mail"
+        [(ngModel)]="email"
+        name="email"
+        required
+      />
+      <input
+        class="password"
+        type="password"
+        placeholder="Mot de passe"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
       <a href="#" class="forgot">Forgot password ?</a>
       <button type="submit">Login</button>
     </form>
+    <div *ngIf="errorMessage" class="error-message"> <!-- Affichage conditionnel du message d'erreur -->
+      {{ errorMessage }}
+    </div>
   </div>
 </div>
-<!-- <div *ngIf="errorMessage" class="error-message">
-  {{ errorMessage }}
-</div> -->
