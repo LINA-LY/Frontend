@@ -1,0 +1,74 @@
+<div class="laborantin-container">
+  <div class="header-info">
+    <div class="info-item">
+      <label>Date :</label>
+      <span>{{ currentDate }}</span>
+    </div>
+    <div class="info-item">
+      <label>Nom du patient :</label>
+      <span>Jean Dupont</span>
+    </div>
+    <div class="info-item">
+      <label>Laborantin :</label>
+      <span>XXXXXX</span>
+    </div>
+  </div>
+
+  <form [formGroup]="laborantinForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="glycemie">Glycémie (mg/dL) :</label>
+      <input
+        type="number"
+        id="glycemie"
+        formControlName="glycemie"
+        required
+        placeholder="Glycémie"
+        step="0.01">
+      <div *ngIf="laborantinForm.get('glycemie')?.invalid && laborantinForm.get('glycemie')?.touched" class="error">
+        Veuillez entrer une valeur valide pour la glycémie.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pression">Pression Artérielle (mmHg) :</label>
+      <input
+        type="number"
+        id="pression"
+        formControlName="pression"
+        required
+        placeholder="Pression Artérielle"
+        step="0.01">
+      <div *ngIf="laborantinForm.get('pression')?.invalid && laborantinForm.get('pression')?.touched" class="error">
+        Veuillez entrer une valeur valide pour la pression artérielle.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cholesterol">Cholestérol (mg/dL) :</label>
+      <input
+        type="number"
+        id="cholesterol"
+        formControlName="cholesterol"
+        required
+        placeholder="Cholestérol"
+        step="0.01">
+      <div *ngIf="laborantinForm.get('cholesterol')?.invalid && laborantinForm.get('cholesterol')?.touched" class="error">
+        Veuillez entrer une valeur valide pour le cholestérol.
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="button" class="btn graph-btn" (click)="generateGraph()">Générer Graphique de Tendance</button>
+      <button type="submit" class="btn save-btn" [disabled]="laborantinForm.invalid">Enregistrer le Bilan</button>
+      <button type="button" class="btn cancel-btn" (click)="cancel()">Annuler</button>
+    </div>
+  </form>
+</div>
+<!-- Zone pour le graphique -->
+<div class="chart-container">
+  <canvas id="myChart"></canvas>
+</div>
+<div style="width: 75%; margin: auto;">
+  <canvas id="myChart"></canvas>
+</div>
+

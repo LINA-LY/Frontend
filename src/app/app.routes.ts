@@ -6,6 +6,12 @@ import { LoginComponent } from './login/login.component';
 import { CreateDpiComponent } from './creation-dpi/creation-dpi.component';
 import { DossierPatientComponent } from './dossier-patient/dossier-patient.component'; 
 import { MedecinInterfaceStartComponent } from './medecin-interface-start/medecin-interface-start.component'; 
+import { OrdonnanceComponent } from './ordonnance/ordonnance.component';
+import { BilanComponent } from './bilan/bilan.component';
+import { LaborantinComponent } from './laborantin/laborantin.component';
+import { SoinComponent } from './soin/soin.component';
+import { ExamensupComponent } from './examensup/examensup.component';
+import { CompterenduComponent } from './compterendu/compterendu.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

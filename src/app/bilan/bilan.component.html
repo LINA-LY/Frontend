@@ -1,0 +1,52 @@
+<div class="bilan-container">
+    <h1 class="page-title">Rédiger Résumé</h1>
+    <p class="page-subtitle">
+      Ajoutez un résumé comprenant les antécédents du patient et les
+      détails de la consultation.
+    </p>
+    <div class="form-card">
+      <form>
+        <!-- Champ : Antécédents médicaux -->
+        <div class="form-group">
+          <label for="antecedents">Antécédents médicaux *</label>
+          <textarea
+            id="antecedents"
+            name="antecedents"
+            placeholder="Ex : Allergies, Maladies chroniques..."
+            [(ngModel)]="bilan.antecedents"
+          ></textarea>
+        </div>
+        <!-- Champ : Observations -->
+        <div class="form-group">
+          <label for="observations">Observations *</label>
+          <textarea
+            id="observations"
+            name="observations"
+            placeholder="Entrez vos observations cliniques..."
+            [(ngModel)]="bilan.observations"
+          ></textarea>
+        </div>
+        <!-- Champ : Diagnostic -->
+        <div class="form-group">
+          <label for="diagnostic">Diagnostic *</label>
+          <textarea
+            id="diagnostic"
+            name="diagnostic"
+            placeholder="Entrez le diagnostic"
+            [(ngModel)]="bilan.diagnostic"
+          ></textarea>
+        </div>
+      </form>
+      <!-- Boutons Enregistrer et Annuler -->
+      <div class="actions">
+        <button type="button" class="btn save-btn" (click)="enregistrerBilan()">
+          Enregistrer le Résumé
+        </button>
+        <button type="button" class="btn cancel-btn" (click)="annuler()">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  
