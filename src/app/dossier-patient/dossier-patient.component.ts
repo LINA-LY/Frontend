@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   selector: 'app-dossier-patient',
   templateUrl: './dossier-patient.component.html',
   styleUrls: ['./dossier-patient.component.css'],
-   imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule],
 })
 export class DossierPatientComponent {
   dossierData: any = {}; // Stocke les données du dossier médical
@@ -19,5 +19,10 @@ export class DossierPatientComponent {
       this.dossierData = navigation.extras.state['dossierData'];
       console.log('Données du dossier :', this.dossierData);
     }
+  }
+
+  // Méthode pour naviguer vers la page de rédaction du bilan
+  redigerBilan() {
+    this.router.navigate(['/bilan']);
   }
 }

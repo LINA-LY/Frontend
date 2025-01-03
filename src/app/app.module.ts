@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
-
+import { BilanComponent } from './bilan/bilan.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +26,7 @@ import { routes } from './app.routes';
     CreateDpiComponent,
     DossierPatientComponent,
     MedecinInterfaceStartComponent,
+    BilanComponent
   ],
   imports: [
     BrowserModule,

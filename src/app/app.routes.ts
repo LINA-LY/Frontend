@@ -12,22 +12,21 @@ import { LaborantinComponent } from './laborantin/laborantin.component';
 import { SoinComponent } from './soin/soin.component';
 import { ExamensupComponent } from './examensup/examensup.component';
 import { CompterenduComponent } from './compterendu/compterendu.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'create-dpi', component: CreateDpiComponent },
-  { path: 'dossier-patient', component: DossierPatientComponent }, 
-  { path: 'medecin-interface-start', component: MedecinInterfaceStartComponent }, 
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, 
-  { path: '**', redirectTo: 'login' },
-  { path: '', redirectTo: '/ordonnance', pathMatch: 'full' },
+  { path: 'dossier-patient', component: DossierPatientComponent },
+  { path: 'medecin-interface-start', component: MedecinInterfaceStartComponent },
   { path: 'ordonnance', component: OrdonnanceComponent },
   { path: 'bilan', component: BilanComponent },
   { path: 'laborantin', component: LaborantinComponent },
   { path: 'soin', component: SoinComponent },
   { path: 'examensup', component: ExamensupComponent },
   { path: 'compterendu', component: CompterenduComponent },
-  
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirection par défaut
+  { path: '**', redirectTo: 'login' }, // Redirection pour les chemins inconnus
 ];
 
 @NgModule({
