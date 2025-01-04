@@ -1,23 +1,69 @@
 <div class="compterendu-container">
-    <h1 class="page-title">Rédiger un Compte-Rendu</h1>
-  
-    <!-- Rectangle avec la date, nom du patient, et radiologue -->
-    <div class="info-banner">
-      <span class="info-item">Date : {{ todayDate }}</span>
-      <span class="info-item">Nom du patient : Jean Dupont</span>
-      <span class="info-item">Radiologue : XXXXX</span>
+  <h1 class="page-title">Rédiger un Compte-Rendu</h1>
+
+  <!-- Rectangle avec la date, nom du patient, et radiologue -->
+  <div class="info-banner">
+    <span class="info-item">Date : {{ todayDate }}</span>
+    <div class="form-group">
+      <label for="nomPatient">Nom du patient *</label>
+      <input
+        type="text"
+        id="nomPatient"
+        [(ngModel)]="nomPatient"
+        placeholder="Ex : Jean Dupont"
+        required
+      />
+      <div *ngIf="!nomPatient" class="error">
+        Veuillez entrer le nom du patient.
+      </div>
     </div>
-  
-    <!-- Zone de rédaction du compte-rendu -->
-    <div class="form-card">
-      <textarea placeholder="Rédiger le Compte-Rendu ici ..." class="textarea"></textarea>
-    </div>
-  
-    <!-- Boutons en bas -->
-    <div class="button-container">
-      <button class="upload-button" (click)="onAttachRadio()">Joindre Radio *</button>
-      <button class="save-button" (click)="saveReport()">Enregistrer le Compte Rendu</button>
-      <button class="cancel-button" (click)="cancel()">Annuler</button>
+    <div class="form-group">
+      <label for="radiologue">Radiologue *</label>
+      <input
+        type="text"
+        id="radiologue"
+        [(ngModel)]="radiologue"
+        placeholder="Ex : Dr. Smith"
+        required
+      />
+      <div *ngIf="!radiologue" class="error">
+        Veuillez entrer le nom du radiologue.
+      </div>
     </div>
   </div>
+
+  <!-- Zone de rédaction du compte-rendu -->
+  <div class="form-card">
+    <textarea
+      placeholder="Rédiger le Compte-Rendu ici ..."
+      class="textarea"
+      [(ngModel)]="compteRendu"
+      required
+    ></textarea>
+    <div *ngIf="!compteRendu" class="error">
+      Veuillez rédiger le compte-rendu.
+    </div>
+  </div>
+
   
+
+  <!-- Boutons en bas -->
+  <div class="button-container">
+    <button class="upload-button" (click)="onAttachRadio()">
+      Joindre Radio *
+    </button>
+    <button class="save-button" (click)="saveReport()">Enregistrer le Compte Rendu</button>
+    <button class="cancel-button" (click)="cancel()">Annuler</button>
+  </div>
+
+  <!-- Zone pour afficher les images de la radio -->
+  <div *ngIf="radioImageUrls.length > 0" class="image-preview">
+    <div *ngFor="let imageUrl of radioImageUrls; let i = index" class="image-container">
+      <img [src]="imageUrl" alt="Radio Image" class="uploaded-image" />
+      <button class="remove-button" (click)="removeImage(i)">×</button>
+    </div>
+  </div>
+  <div *ngIf="radioImageUrls.length === 0" class="image-preview-placeholder">
+    Aucune image sélectionnée.
+  </div>
+</div>

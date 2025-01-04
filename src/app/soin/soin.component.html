@@ -1,53 +1,92 @@
 <div class="soin-container">
-    <h1 class="page-title">Remplir Soin</h1>
-  
-    <!-- Rectangle avec la date, nom du patient, et infirmier -->
-    <div class="info-banner">
-      <span class="info-item">Date : {{ todayDate }}</span>
-      <span class="info-item">Nom du patient : Jean Dupont</span>
-      <span class="info-item">Infirmier : XXXX</span>
-    </div>
-  
-    <!-- Formulaire principal -->
-    <div class="form-card">
-      <form>
-        <!-- Médicaments -->
-        <div class="form-group">
-          <label for="Médicaments">Médicaments administrés *</label>
-          <textarea
-            id="Médicaments"
-            name="Médicaments"
-            placeholder="Ex : Paracétamol ,500mg ,3 fois/jour"
-            [(ngModel)]="soin.medicaments"
-          ></textarea>
-        </div>
-        <!-- Soins infirmiers -->
-        <div class="form-group">
-          <label for="Soins">Soins infirmiers *</label>
-          <textarea
-            id="Soins"
-            name="Soins infirmiers"
-            placeholder="ex : Pancement effectué , température elevé.."
-            [(ngModel)]="soin.soins_infirmiers"
-          ></textarea>
-        </div>
-        <!-- Observations -->
-        <div class="form-group">
-          <label for="Observations">Observations *</label>
-          <textarea
-            id="Observations"
-            name="Observations"
-            placeholder="Etat général du patient, evolution des symptomes"
-            [(ngModel)]="soin.observations"
-          ></textarea>
-        </div>
-      </form>
-  
-      <!-- Boutons d'actions -->
-      <div class="actions">
-        <button type="button" class="btn save-btn" (click)="enregistrerSoin()">Enregistrer le soin</button>
-        <button type="button" class="btn cancel-btn" (click)="annuler()">Annuler</button>
+  <h1 class="page-title">Remplir Soin</h1>
+
+  <!-- Rectangle avec la date, nom du patient, et infirmier -->
+  <div class="info-banner">
+    <span class="info-item">Date : {{ todayDate }}</span>
+  </div>
+
+  <!-- Formulaire principal -->
+  <div class="form-card">
+    <form>
+       <!-- Nom du patient -->
+    <div class="form-group">
+      <label for="nomPatient">Nom du patient *</label>
+      <input
+        type="text"
+        id="nomPatient"
+        name="nomPatient"
+        placeholder="Ex : Jean Dupont"
+        [(ngModel)]="soin.nomPatient"
+        required
+      />
+      <div *ngIf="!soin.nomPatient" class="error">
+        Veuillez entrer le nom du patient.
       </div>
     </div>
+    <!-- Infirmier -->
+    <div class="form-group">
+      <label for="infirmier">Infirmier *</label>
+      <input
+        type="text"
+        id="infirmier"
+        name="infirmier"
+        placeholder="Ex : Dr. Smith"
+        [(ngModel)]="soin.infirmier"
+        required
+      />
+      <div *ngIf="!soin.infirmier" class="error">
+        Veuillez entrer le nom de l'infirmier.
+      </div>
+    </div>
+      <!-- Médicaments -->
+      <div class="form-group">
+        <label for="Médicaments">Médicaments administrés *</label>
+        <textarea
+          id="Médicaments"
+          name="Médicaments"
+          placeholder="Ex : Paracétamol ,500mg ,3 fois/jour"
+          [(ngModel)]="soin.medicaments"
+          required
+        ></textarea>
+        <div *ngIf="!soin.medicaments" class="error">
+          Veuillez entrer les médicaments administrés.
+        </div>
+      </div>
+      <!-- Soins infirmiers -->
+      <div class="form-group">
+        <label for="Soins">Soins infirmiers *</label>
+        <textarea
+          id="Soins"
+          name="Soins infirmiers"
+          placeholder="ex : Pansement effectué, température élevée..."
+          [(ngModel)]="soin.soins_infirmiers"
+          required
+        ></textarea>
+        <div *ngIf="!soin.soins_infirmiers" class="error">
+          Veuillez entrer les soins infirmiers.
+        </div>
+      </div>
+      <!-- Observations -->
+      <div class="form-group">
+        <label for="Observations">Observations *</label>
+        <textarea
+          id="Observations"
+          name="Observations"
+          placeholder="Etat général du patient, évolution des symptômes"
+          [(ngModel)]="soin.observations"
+          required
+        ></textarea>
+        <div *ngIf="!soin.observations" class="error">
+          Veuillez entrer les observations.
+        </div>
+      </div>
+    </form>
+
+    <!-- Boutons d'actions -->
+    <div class="actions">
+      <button type="button" class="btn save-btn" (click)="enregistrerSoin()">Enregistrer le soin</button>
+      <button type="button" class="btn cancel-btn" (click)="annuler()">Annuler</button>
+    </div>
   </div>
-  
+</div>

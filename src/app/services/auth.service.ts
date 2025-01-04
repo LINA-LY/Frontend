@@ -19,10 +19,25 @@ export class AuthService {
     const data = { email, password };
     return this.http.post<any>(this.apiUrl, data).pipe(
       tap((response) => {
-        if (response.token) {
-          localStorage.setItem('authToken', response.token);
-          localStorage.setItem('userData', JSON.stringify(response.user));
-          localStorage.setItem('role', response.role); // Stockez le rôle
+        if (isPlatformBrowser(this.platformId)) {
+          if (response.token) {
+            // Store the token in localStorage
+            localStorage.setItem('authToken', response.token);
+  
+            // Store the user data in localStorage
+            const userData = {
+              id: response.id,
+              nom: response.nom,
+              prenom: response.prenom,
+              email: response.email,
+            };
+            localStorage.setItem('userData', JSON.stringify(userData));
+  
+            // Store the role if available
+            if (response.role) {
+              localStorage.setItem('role', response.role);
+            }
+          }
         }
       }),
       catchError(this.handleError)
@@ -59,13 +74,12 @@ export class AuthService {
     }
     return false;
   }
-
   logout(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) { // Check if running in the browser
       localStorage.removeItem('authToken');
       localStorage.removeItem('userData');
       localStorage.removeItem('role');
-      // this.nssSubject.next(null);
+      this.nssSubject.next(null);
     }
   }
 

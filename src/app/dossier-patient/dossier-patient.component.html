@@ -5,10 +5,8 @@
       <h1>DPI</h1>
     </div>
     <nav class="navbar">
-      <a routerLink="/consult-dpi" class="nav-link">Consulter DPI</a>
-      <a routerLink="/create-dpi" class="nav-link">Créer DPI</a>
     </nav>
-    <button class="logout-btn">Déconnexion</button>
+    <button class="btn-deconnexion" (click)="onLogout()">Déconnexion</button>
   </header>
 
   <div class="search-section">
@@ -75,11 +73,6 @@
       </div>
     </div>
 
-    <!-- Footer Section -->
-    <div class="footer">
-      <button class="trend-btn">
-        Voir Radiographies et Graphiques de Tendance
-      </button>
-    </div>
+   
   </main>
 </div>
