@@ -78,7 +78,7 @@ export class LoginComponent {
         this.router.navigate(['/infermier']);
         break;
       case 'Laborantin':
-        this.router.navigate(['/infermier']);
+        this.router.navigate(['/laborantin-interface']);
         break;
       default:
         this.router.navigate(['/']); // Redirection par défaut

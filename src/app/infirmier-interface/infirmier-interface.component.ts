@@ -46,4 +46,7 @@ export class InfirmierInterfaceComponent implements OnInit {
     this.router.navigate(['/login']); // Redirigez vers la page de connexion
   }
 
+  redigerBilan(): void {
+    this.router.navigate(['/soin']); // Utilisez la méthode navigate
+  }
 }

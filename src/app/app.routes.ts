@@ -15,6 +15,8 @@ import { CompterenduComponent } from './compterendu/compterendu.component';
 import { AuthGuard } from './guards/auth.guard';
 import { InfirmierInterfaceComponent } from './infirmier-interface/infirmier-interface.component';
 import { PatientInterfaceComponent } from './patient-interface/patient-interface.component';
+import { RadiologueComponent } from './radiologue/radiologue.component';
+import { LaborantinInterfaceComponent } from './laborantin-interface/laborantin-interface.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,6 +31,8 @@ export const routes: Routes = [
   { path: 'compterendu', component: CompterenduComponent, canActivate: [AuthGuard] },
   { path: 'infermier', component: InfirmierInterfaceComponent, canActivate: [AuthGuard] },
   { path: 'patient-interface', component: PatientInterfaceComponent },
+  { path: 'radiologue', component: RadiologueComponent },
+  { path: 'laborantin-interface', component: LaborantinInterfaceComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' },
 ];
