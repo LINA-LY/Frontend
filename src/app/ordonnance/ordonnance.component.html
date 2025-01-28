@@ -4,67 +4,151 @@
     Veuillez renseigner les informations suivantes pour rédiger une nouvelle ordonnance.
   </p>
 
+  <!-- Messages de succès et d'erreur -->
+  <div *ngIf="messageSucces" class="message-succes">
+    {{ messageSucces }}
+  </div>
+  <div *ngIf="messageErreur" class="message-erreur">
+    {{ messageErreur }}
+  </div>
+
+  <!-- Formulaire -->
   <div class="form-card">
-    <form>
-      <!-- Champ : NSS -->
-      <div class="form-group">
-        <label for="nss">Numéro de Sécurité Sociale (NSS) *</label>
-        <input
-          type="text"
-          id="nss"
-          [(ngModel)]="nss"
-          name="nss"
-          placeholder="Ex : 1234567890123"
-        />
-      </div>
+    <form [formGroup]="ordonnanceForm">
       <!-- Champ : Date -->
       <div class="form-group">
         <label for="date">Date *</label>
-        <input
-          type="date"
-          id="date"
-          [(ngModel)]="date"
-          name="date"
-        />
+        <input type="date" id="date" formControlName="date" />
+        <div *ngIf="ordonnanceForm.get('date')?.invalid && ordonnanceForm.get('date')?.touched" class="erreur-validation">
+          La date est obligatoire.
+        </div>
       </div>
-      <!-- Champ : Nom du médicament -->
+
+      <!-- Champ : Nom du patient -->
       <div class="form-group">
-        <label for="nom-medicament">Nom du médicament *</label>
-        <input
-          type="text"
-          id="nom-medicament"
-          [(ngModel)]="nouveauMedicament.nom"
-          name="nom-medicament"
-          placeholder="Ex : Paracétamol"
-        />
+        <label for="nom_patient">Nom du patient *</label>
+        <input type="text" id="nom_patient" formControlName="nom_patient" placeholder="Ex : Hamadache" />
+        <div *ngIf="ordonnanceForm.get('nom_patient')?.invalid && ordonnanceForm.get('nom_patient')?.touched" class="erreur-validation">
+          Le nom du patient est obligatoire.
+        </div>
       </div>
-      <!-- Champ : Dosage -->
+
+      <!-- Champ : Prénom du patient -->
       <div class="form-group">
-        <label for="dosage">Dosage *</label>
-        <input
-          type="text"
-          id="dosage"
-          [(ngModel)]="nouveauMedicament.dosage"
-          name="dosage"
-          placeholder="Ex : 500mg, 1x/jour"
-        />
+        <label for="prenom_patient">Prénom du patient *</label>
+        <input type="text" id="prenom_patient" formControlName="prenom_patient" placeholder="Ex : Kahina" />
+        <div *ngIf="ordonnanceForm.get('prenom_patient')?.invalid && ordonnanceForm.get('prenom_patient')?.touched" class="erreur-validation">
+          Le prénom du patient est obligatoire.
+        </div>
       </div>
-      <!-- Champ : Durée -->
+
+      <!-- Champ : NSS -->
       <div class="form-group">
-        <label for="duree">Durée *</label>
-        <input
-          type="text"
-          id="duree"
-          [(ngModel)]="nouveauMedicament.duree"
-          name="duree"
-          placeholder="Ex : 7 jours"
-        />
+        <label for="nss">Numéro de Sécurité Sociale (NSS) *</label>
+        <input type="text" id="nss" formControlName="nss" placeholder="Ex : 12345 ou ABC123" />
+        <div *ngIf="ordonnanceForm.get('nss')?.invalid && ordonnanceForm.get('nss')?.touched" class="erreur-validation">
+          Le NSS est obligatoire et doit contenir uniquement des chiffres ou des lettres.
+        </div>
       </div>
+
+      <!-- Sous-formulaire : Nouveau médicament -->
+      <div formGroupName="nouveauMedicament">
+        <!-- Champ : Quantité -->
+        <div class="form-group">
+          <label for="quantite">Quantité *</label>
+          <input type="text" id="quantite" formControlName="quantite" placeholder="Ex : 3" />
+          <div *ngIf="ordonnanceForm.get('nouveauMedicament.quantite')?.invalid && ordonnanceForm.get('nouveauMedicament.quantite')?.touched" class="erreur-validation">
+            La quantité est obligatoire.
+          </div>
+        </div>
+
+        <!-- Champ : Description -->
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <input type="text" id="description" formControlName="description" placeholder="Ex : Après repas" />
+          <div *ngIf="ordonnanceForm.get('nouveauMedicament.description')?.invalid && ordonnanceForm.get('nouveauMedicament.description')?.touched" class="erreur-validation">
+            La description est obligatoire.
+          </div>
+        </div>
+
+        <!-- Champ : Durée -->
+        <div class="form-group">
+          <label for="duree">Durée *</label>
+          <input type="text" id="duree" formControlName="duree" placeholder="Ex : 5 jours" />
+          <div *ngIf="ordonnanceForm.get('nouveauMedicament.duree')?.invalid && ordonnanceForm.get('nouveauMedicament.duree')?.touched" class="erreur-validation">
+            La durée est obligatoire.
+          </div>
+        </div>
+
+        <!-- Sous-formulaire : Détails du médicament -->
+        <div formGroupName="medicament">
+          <!-- Champ : Nom du médicament -->
+          <div class="form-group">
+            <label for="nom-medicament">Nom du médicament *</label>
+            <input type="text" id="nom-medicament" formControlName="nom" placeholder="Ex : Doliprane" />
+            <div *ngIf="ordonnanceForm.get('nouveauMedicament.medicament.nom')?.invalid && ordonnanceForm.get('nouveauMedicament.medicament.nom')?.touched" class="erreur-validation">
+              Le nom du médicament est obligatoire.
+            </div>
+          </div>
+
+          <!-- Champ : Dosage -->
+          <div class="form-group">
+            <label for="dosage">Dosage *</label>
+            <input type="text" id="dosage" formControlName="dosage" placeholder="Ex : 1000mg" />
+            <div *ngIf="ordonnanceForm.get('nouveauMedicament.medicament.dosage')?.invalid && ordonnanceForm.get('nouveauMedicament.medicament.dosage')?.touched" class="erreur-validation">
+              Le dosage est obligatoire.
+            </div>
+          </div>
+
+          <!-- Champ : Forme -->
+          <div class="form-group">
+            <label for="forme">Forme *</label>
+            <input type="text" id="forme" formControlName="forme" placeholder="Ex : Comprimé" />
+            <div *ngIf="ordonnanceForm.get('nouveauMedicament.medicament.forme')?.invalid && ordonnanceForm.get('nouveauMedicament.medicament.forme')?.touched" class="erreur-validation">
+              La forme est obligatoire.
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Bouton pour ajouter un médicament -->
       <button type="button" class="btn add-medicament-btn" (click)="ajouterMedicament()">
         + Ajouter un médicament
       </button>
     </form>
+
+    <!-- Liste des médicaments ajoutés -->
+    <div class="medicaments-list" *ngIf="medicaments.length > 0">
+      <h2 class="list-title">Médicaments prescrits</h2>
+      <table class="medicaments-table">
+        <thead>
+          <tr>
+            <th>Quantité</th>
+            <th>Nom</th>
+            <th>Dosage</th>
+            <th>Forme</th>
+            <th>Description</th>
+            <th>Durée</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let medicament of medicaments; let i = index">
+            <td>{{ medicament.quantite }}</td>
+            <td>{{ medicament.medicament.nom }}</td>
+            <td>{{ medicament.medicament.dosage }}</td>
+            <td>{{ medicament.medicament.forme }}</td>
+            <td>{{ medicament.description }}</td>
+            <td>{{ medicament.duree }}</td>
+            <td>
+              <button type="button" class="btn delete-btn" (click)="supprimerMedicament(i)">
+                Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <!-- Boutons Enregistrer et Annuler -->
     <div class="actions">
@@ -75,26 +159,5 @@
         Annuler
       </button>
     </div>
-  </div>
-
-  <!-- Liste des médicaments ajoutés -->
-  <div class="medicaments-list" *ngIf="medicaments.length > 0">
-    <h2 class="list-title">Médicaments prescrits</h2>
-    <table class="medicaments-table">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Dosage</th>
-          <th>Durée</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let medicament of medicaments; let i = index">
-          <td>{{ medicament.nom }}</td>
-          <td>{{ medicament.dosage }}</td>
-          <td>{{ medicament.duree }}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>

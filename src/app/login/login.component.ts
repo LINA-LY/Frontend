@@ -39,6 +39,7 @@ export class LoginComponent {
         if (response.token) {
           // Rediriger en fonction du rôle
           this.redirectBasedOnRole(response.role);
+          // this.authService.setNss(response?.nss);
         } else {
           this.errorMessage = 'Réponse inattendue du serveur.';
         }
@@ -68,16 +69,16 @@ export class LoginComponent {
         this.router.navigate(['/medecin-interface-start']);
         break;
       case 'Patient':
-        this.router.navigate(['/patient']);
+        this.router.navigate(['/patient-interface']);
         break;
       case 'Radiologue':
         this.router.navigate(['/radiologue']);
         break;
       case 'Infirmier':
-        this.router.navigate(['/infirmier']);
+        this.router.navigate(['/infermier']);
         break;
       case 'Laborantin':
-        this.router.navigate(['/laborantin']);
+        this.router.navigate(['/laborantin-interface']);
         break;
       default:
         this.router.navigate(['/']); // Redirection par défaut

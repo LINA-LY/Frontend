@@ -1,91 +1,125 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, ReactiveFormsModule } from '@angular/forms';
 import { OrdonnanceService } from '../services/ordonnance.service';
+import { CommonModule } from '@angular/common';
 
-interface ApiResponse {
-  success: boolean;
-  message: string;
-  data?: any; // Optionnel, selon la structure de la réponse
+// Fonction de validation personnalisée pour le NSS
+export function nssValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const value = control.value;
+    const regex = /^[a-zA-Z0-9]+$/; // Regex pour accepter uniquement des chiffres ou des lettres
+    const isValid = regex.test(value);
+    return isValid ? null : { invalidNss: { value: control.value } };
+  };
 }
 
-interface ApiError {
-  status: number;
-  message: string;
-  error?: any; // Optionnel, selon la structure de l'erreur
+interface MedicamentDetails {
+  nom: string;
+  dosage: string;
+  forme: string;
+}
+
+interface Medicament {
+  quantite: string;
+  description: string;
+  duree: string;
+  medicament: MedicamentDetails;
+}
+
+interface Ordonnance {
+  date: string;
+  nom_patient: string;
+  prenom_patient: string;
+  nss: string;
+  medicaments: Medicament[];
 }
 
 @Component({
   selector: 'app-ordonnance',
   templateUrl: './ordonnance.component.html',
   styleUrls: ['./ordonnance.component.scss'],
-  standalone: true,
-  imports: [CommonModule, FormsModule], // Retirez HttpClientModule
+  imports: [CommonModule, ReactiveFormsModule],
+
 })
 export class OrdonnanceComponent {
-  // Propriétés pour stocker les informations de l'ordonnance
-  nss: string = '';
-  date: string = '';
+  ordonnanceForm: FormGroup;
+  medicaments: Medicament[] = [];
+  messageSucces: string | null = null;
+  messageErreur: string | null = null;
 
-  // Propriété pour stocker temporairement les informations saisies
-  nouveauMedicament = {
-    nom: '',
-    dosage: '',
-    duree: '',
-  };
+  constructor(
+    private fb: FormBuilder,
+    private ordonnanceService: OrdonnanceService
+  ) {
+    this.ordonnanceForm = this.fb.group({
+      date: ['', Validators.required],
+      nom_patient: ['', Validators.required],
+      prenom_patient: ['', Validators.required],
+      nss: ['', [Validators.required, nssValidator()]], // Validation personnalisée
+      nouveauMedicament: this.fb.group({
+        quantite: ['', Validators.required],
+        description: ['', Validators.required],
+        duree: ['', Validators.required],
+        medicament: this.fb.group({
+          nom: ['', Validators.required],
+          dosage: ['', Validators.required],
+          forme: ['', Validators.required],
+        }),
+      }),
+    });
+  }
 
-  // Liste des médicaments ajoutés
-  medicaments: { nom: string; dosage: string; duree: string }[] = [];
-
-  // Injectez OrdonnanceService dans le constructeur
-  constructor(private ordonnanceService: OrdonnanceService) {}
-
-  // Fonction pour ajouter un médicament
+  // Ajouter un médicament à la liste
   ajouterMedicament() {
-    if (
-      this.nouveauMedicament.nom &&
-      this.nouveauMedicament.dosage &&
-      this.nouveauMedicament.duree
-    ) {
-      this.medicaments.push({ ...this.nouveauMedicament });
-      this.nouveauMedicament = { nom: '', dosage: '', duree: '' };
+    if (this.ordonnanceForm.get('nouveauMedicament')?.valid) {
+      const medicament = this.ordonnanceForm.get('nouveauMedicament')?.value;
+      this.medicaments.push(medicament);
+      this.ordonnanceForm.get('nouveauMedicament')?.reset();
+      this.messageErreur = null; // Réinitialiser les messages d'erreur
     } else {
-      alert('Veuillez remplir tous les champs avant d’ajouter un médicament.');
+      this.messageErreur = 'Veuillez remplir tous les champs du médicament.';
     }
   }
 
-  // Fonction pour enregistrer l’ordonnance
+  // Supprimer un médicament de la liste
+  supprimerMedicament(index: number) {
+    this.medicaments.splice(index, 1);
+  }
+
+  // Enregistrer l'ordonnance
   enregistrerOrdonnance() {
-    if (this.medicaments.length > 0 && this.nss && this.date) {
-      const ordonnance = {
-        nss: this.nss,
-        date: this.date,
+    if (this.ordonnanceForm.valid) {
+      const ordonnance: Ordonnance = {
+        date: this.ordonnanceForm.get('date')?.value,
+        nom_patient: this.ordonnanceForm.get('nom_patient')?.value,
+        prenom_patient: this.ordonnanceForm.get('prenom_patient')?.value,
+        nss: this.ordonnanceForm.get('nss')?.value,
         medicaments: this.medicaments,
       };
 
-      // Appel du service pour enregistrer l'ordonnance
       this.ordonnanceService.enregistrerOrdonnance(ordonnance).subscribe(
-        (response: ApiResponse) => { // Utiliser l'interface ApiResponse
-          console.log('Ordonnance enregistrée avec succès :', response);
-          alert('Ordonnance enregistrée avec succès !');
-          this.annuler(); // Réinitialiser le formulaire après l'enregistrement
+        (response) => {
+          this.messageSucces = 'Ordonnance enregistrée avec succès !';
+          this.messageErreur = null;
+          this.annuler();
         },
-        (error: ApiError) => { // Utiliser l'interface ApiError
-          console.error('Erreur lors de l’enregistrement de l’ordonnance :', error);
-          alert('Erreur lors de l’enregistrement de l’ordonnance.');
+        (error) => {
+          this.messageErreur =
+            "Une erreur est survenue lors de l'enregistrement de l'ordonnance.";
+          console.error('Erreur API :', error);
         }
       );
     } else {
-      alert('Veuillez remplir tous les champs et ajouter au moins un médicament.');
+      this.messageErreur =
+        'Veuillez remplir tous les champs correctement.';
     }
   }
 
-  // Fonction pour annuler l’édition
+  // Réinitialiser le formulaire
   annuler() {
-    this.nss = '';
-    this.date = '';
+    this.ordonnanceForm.reset();
     this.medicaments = [];
-    this.nouveauMedicament = { nom: '', dosage: '', duree: '' };
-   
+    this.messageSucces = null;
+    this.messageErreur = null;
   }
 }

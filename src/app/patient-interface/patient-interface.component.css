@@ -193,22 +193,51 @@ body,  h1, h2, h3, h4, h5, h6, p, li {
   background-color: #4a8bc2; /* Nouvelle couleur au survol */
 }
 
-.btn-deconnexion {
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
-  margin-right: 10;
-  padding: 8px 16px;
-  border-radius: 5px;
+/* Style pour les messages d'absence de données */
+.no-data {
+  color: #666;
+  font-style: italic;
+}
+
+/* Style pour les boutons secondaires */
+.secondary-btn {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 4px;
   cursor: pointer;
-  height: 40px; /* Taille fixe pour le bouton */
-  width: auto;
+  margin-left: 10px;
 }
 
-.btn-deconnexion:hover {
-  background-color: #ff4c4c;
+.secondary-btn:hover {
+  background-color: #e0e0e0;
 }
 
+/* Style pour les listes */
+.list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.list li {
+  margin-bottom: 10px;
+}
+
+/* Style pour la grille horizontale */
+.horizontal-grid {
+  display: flex;
+  gap: 20px;
+}
+
+.horizontal-grid > div {
+  flex: 1;
+}
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin: 20px 0;
+  text-align: center;
+}
 
 /* Mobile-Friendly Styles */
 @media (max-width: 768px) {
@@ -259,5 +288,35 @@ body,  h1, h2, h3, h4, h5, h6, p, li {
 
   p, li {
     font-size: 0.9rem;
+  }
+
+  .search-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-input {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .qr-btn {
+    align-self: center;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .nav-link {
+    margin: 5px 10px;
+  }
+
+  .logout-btn {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
   }
 }

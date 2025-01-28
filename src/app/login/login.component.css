@@ -1,3 +1,4 @@
+/* Styles globaux pour le PC (par défaut) */
 .login-container {
   display: flex;
   height: 100vh;
@@ -138,4 +139,62 @@ button:hover {
   color: red;
   margin-bottom: 10px;
   text-align: center;
+}
+
+/* Pour les appareils de moins de 768px (mobile) */
+@media screen and (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .left-section {
+    padding: 15px;
+    margin: 10px;
+    background-color: #003366; /* On garde la couleur d'arrière-plan */
+  }
+
+  .left-section img {
+    width: 80%;
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+
+  .phrase {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.6;
+    width: 100%;
+  }
+
+  .right-section {
+    padding: 20px;
+    padding-left: 30px;
+  }
+
+  .Bien {
+    font-size: 20px;
+  }
+
+  .Connexion {
+    font-size: 24px;
+  }
+
+  form {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  button {
+    height: 45px;
+    font-size: 16px;
+  }
+
+  .forgot {
+    font-size: 12px;
+  }
 }

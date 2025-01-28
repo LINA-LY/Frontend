@@ -99,7 +99,9 @@ export class MedecinInterfaceStartComponent implements OnInit, OnDestroy {
     console.log('Navigation vers dossier-patient');
     this.router.navigate(['/create-dpi']);
   }
-
+  navigateToConsulteDpi(): void {
+    this.router.navigate(['/medecin-interface-start']);
+  }
   onSearch(nss: string): void {
     if (!nss) {
       console.error('NSS non fourni');
