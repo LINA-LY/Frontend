@@ -208,3 +208,56 @@ body,  h1, h2, h3, h4, h5, h6, p, li {
 .btn-deconnexion:hover {
   background-color: #ff4c4c;
 }
+
+
+/* Mobile-Friendly Styles */
+@media (max-width: 768px) {
+  body {
+    background-color: #f0f4f8;
+  }
+
+  .container {
+    width: 90%;
+    padding: 0;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .header .logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .card {
+    border-radius: 10px;
+    padding: 15px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  p, li {
+    font-size: 0.9rem;
+  }
+}
